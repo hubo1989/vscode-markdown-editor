@@ -38,6 +38,13 @@
         "command": "markdown-editor.openEditor",
         "title": "Open with markdown editor",
         "category": "markdown-editor"
+      },
+      {
+        "command": "markdown-editor.openInSplit",
+        "title": "Open in Split with Markdown Editor",
+        "category": "markdown-editor",
+        "icon": "$(pencil)"
+        
       }
     ],
     "menus": {
@@ -53,6 +60,14 @@
           "when": "resourceLangId == markdown",
           "command": "markdown-editor.openEditor",
           "group": "1_open"
+        }
+      ],
+      "editor/title": [
+        {
+          "when": "resourceLangId == markdown && !activeWebviewPanelId",
+          "command": "markdown-editor.openInSplit",
+          "group": "navigation@2",
+          "icon": "$(pencil)"
         }
       ]
     },
@@ -130,7 +145,7 @@
             "filenamePattern": "*.md"
           }
         ],
-        "priority": "default"
+        "priority": "option"
       }
     ]
   },

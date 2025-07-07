@@ -31,12 +31,24 @@ class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+  // 注册打开编辑器命令
   context.subscriptions.push(
     vscode.commands.registerCommand(
       'markdown-editor.openEditor',
       (uri?: vscode.Uri, ...args) => {
         debug('command', uri, args)
         EditorPanel.createOrShow(context, uri)
+      }
+    )
+  )
+
+  // 注册在拆分窗口中打开编辑器命令
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'markdown-editor.openInSplit',
+      (uri?: vscode.Uri, ...args) => {
+        debug('command openInSplit', uri, args)
+        EditorPanel.createOrShow(context, uri, true)
       }
     )
   )
@@ -73,12 +85,15 @@ class EditorPanel {
 
   public static async createOrShow(
     context: vscode.ExtensionContext,
-    uri?: vscode.Uri
+    uri?: vscode.Uri,
+    splitRight?: boolean
   ) {
     const { extensionUri } = context
-    const column = vscode.window.activeTextEditor
-      ? vscode.window.activeTextEditor.viewColumn
-      : undefined
+    const column = splitRight 
+      ? vscode.ViewColumn.Two 
+      : vscode.window.activeTextEditor
+        ? vscode.window.activeTextEditor.viewColumn
+        : undefined
     if (EditorPanel.currentPanel && uri !== EditorPanel.currentPanel?._uri) {
       EditorPanel.currentPanel.dispose()
     }
