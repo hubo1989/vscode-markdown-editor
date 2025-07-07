@@ -3,7 +3,7 @@
   "displayName": "Markdown Editor",
   "icon": "media/logo.png",
   "description": "A full-featured WYSIWYG editor for markdown.",
-  "version": "0.1.13",
+  "version": "0.2.0",
   "publisher": "zaaack",
   "private": true,
   "engines": {
@@ -87,6 +87,11 @@
           "enum": ["external-first", "custom-first"],
           "default": "external-first",
           "description": "Order to load CSS: 'external-first' loads external CSS files before custom CSS, 'custom-first' loads custom CSS before external files."
+        },
+        "markdown-editor.showOutlineByDefault": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show the outline panel by default when opening markdown files in the editor."
         }
       }
     },
