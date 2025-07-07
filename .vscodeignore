@@ -1,5 +1,6 @@
 .vscode
 .github
+docs/
 media-src
 node_modules
 src
@@ -10,3 +11,4 @@ esbuild.js
 Foyfile.ts
 yarn.lock
 yarn-error.log
+scripts/
