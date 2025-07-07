@@ -206,12 +206,14 @@ class EditorPanel {
       
       // 监听大纲显示设置变化
       if (e.affectsConfiguration('markdown-editor.showOutlineByDefault') ||
+          e.affectsConfiguration('markdown-editor.outlinePosition') ||
           e.affectsConfiguration('markdown-editor.useVscodeThemeColor')) {
         // 发送配置更新消息给webview
         this._panel.webview.postMessage({
           command: 'config-update',
           config: {
             showOutlineByDefault: EditorPanel.config.get<boolean>('showOutlineByDefault'),
+            outlinePosition: EditorPanel.config.get<string>('outlinePosition'),
             useVscodeThemeColor: EditorPanel.config.get<boolean>('useVscodeThemeColor')
           }
         })
@@ -248,6 +250,9 @@ class EditorPanel {
                 ),
                 showOutlineByDefault: EditorPanel.config.get<boolean>(
                   'showOutlineByDefault'
+                ),
+                outlinePosition: EditorPanel.config.get<string>(
+                  'outlinePosition'
                 ),
                 ...this._context.globalState.get(KeyVditorOptions),
               },

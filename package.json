@@ -92,6 +92,12 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to show the outline panel by default when opening markdown files in the editor."
+        },
+        "markdown-editor.outlinePosition": {
+          "type": "string",
+          "enum": ["left", "right"],
+          "default": "left",
+          "description": "Position of the outline panel. Can be 'left' or 'right'."
         }
       }
     },

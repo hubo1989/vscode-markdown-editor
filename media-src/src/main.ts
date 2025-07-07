@@ -55,6 +55,10 @@ function initVditor(msg) {
     cache: { enable: false },
     toolbar,
     toolbarConfig: { pin: true },
+    outline: {
+      enable: msg.options && msg.options.showOutlineByDefault ? true : false,
+      position: msg.options && msg.options.outlinePosition ? msg.options.outlinePosition : 'left'
+    },
     ...defaultOptions,
     after() {
       fixDarkTheme()
