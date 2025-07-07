@@ -94,6 +94,28 @@ New configuration options available:
 - right click on a opened markdown file's tab title
 - then click`Open with markdown editor`
 
+## Development
+
+### Building and Packaging
+
+This project includes automated build scripts for easy development and packaging:
+
+```bash
+# Build and create VSIX package
+npm run package
+
+# Build and publish (with version bump)
+npm run publish
+
+# Build and package only (no publish)
+npm run publish:package-only
+
+# Build and publish without version bump
+npm run publish:skip-version
+```
+
+For more details, see [scripts/README.md](./scripts/README.md).
+
 ### Custom CSS (custom layout and vditor personalization)
 
 Edit your settings.json and add

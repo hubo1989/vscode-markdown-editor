@@ -153,6 +153,10 @@
     "watch": "foy watch",
     "start": "foy watch",
     "build": "foy build",
+    "package": "./scripts/build-and-package.sh",
+    "publish": "./scripts/build-and-publish.sh",
+    "publish:package-only": "./scripts/build-and-publish.sh --package-only",
+    "publish:skip-version": "./scripts/build-and-publish.sh --skip-version",
     "pub": "foy build && npm version patch && git push origin master --tags && vsce package && vsce publish"
   },
   "devDependencies": {

@@ -1,10 +1,11 @@
 import { task, desc, option, fs, setGlobalOptions } from 'foy'
 setGlobalOptions({ loading: false, strict: true })
+
 task('watch', async (ctx) => {
   // Your build tasks
   await Promise.all([
     ctx.exec('tsc -w -p ./'),
-    ctx.cd('./media-src').exec('pnpm start'),
+    ctx.cd('./media-src').exec('bun start'),
   ])
 })
 
