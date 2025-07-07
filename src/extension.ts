@@ -207,6 +207,8 @@ class EditorPanel {
       // 监听大纲显示设置变化
       if (e.affectsConfiguration('markdown-editor.showOutlineByDefault') ||
           e.affectsConfiguration('markdown-editor.outlinePosition') ||
+          e.affectsConfiguration('markdown-editor.outlineWidth') ||
+          e.affectsConfiguration('markdown-editor.enableOutlineResize') ||
           e.affectsConfiguration('markdown-editor.useVscodeThemeColor')) {
         // 发送配置更新消息给webview
         this._panel.webview.postMessage({
@@ -214,6 +216,8 @@ class EditorPanel {
           config: {
             showOutlineByDefault: EditorPanel.config.get<boolean>('showOutlineByDefault'),
             outlinePosition: EditorPanel.config.get<string>('outlinePosition'),
+            outlineWidth: EditorPanel.config.get<number>('outlineWidth'),
+            enableOutlineResize: EditorPanel.config.get<boolean>('enableOutlineResize'),
             useVscodeThemeColor: EditorPanel.config.get<boolean>('useVscodeThemeColor')
           }
         })
@@ -253,6 +257,12 @@ class EditorPanel {
                 ),
                 outlinePosition: EditorPanel.config.get<string>(
                   'outlinePosition'
+                ),
+                outlineWidth: EditorPanel.config.get<number>(
+                  'outlineWidth'
+                ),
+                enableOutlineResize: EditorPanel.config.get<boolean>(
+                  'enableOutlineResize'
                 ),
                 ...this._context.globalState.get(KeyVditorOptions),
               },
@@ -327,6 +337,12 @@ class EditorPanel {
               url = NodePath.resolve(this._fsPath, '..', url)
             }
             vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(url))
+            break
+          }
+          case 'update-outline-width': {
+            // 更新大纲宽度配置
+            const config = vscode.workspace.getConfiguration('markdown-editor')
+            await config.update('outlineWidth', message.width, vscode.ConfigurationTarget.Global)
             break
           }
         }

@@ -98,6 +98,18 @@
           "enum": ["left", "right"],
           "default": "left",
           "description": "Position of the outline panel. Can be 'left' or 'right'."
+        },
+        "markdown-editor.outlineWidth": {
+          "type": "number",
+          "default": 200,
+          "minimum": 150,
+          "maximum": 500,
+          "description": "Default width of the outline panel in pixels. Can be adjusted manually by dragging the resize handle."
+        },
+        "markdown-editor.enableOutlineResize": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable manual resizing of the outline panel by dragging."
         }
       }
     },

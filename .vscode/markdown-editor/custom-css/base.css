@@ -1,0 +1,161 @@
+/* 修复上传按钮容器问题 */
+.vditor .vditor-toolbar__item.vditor-toolbar__upload {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: var(--toolbar-height) !important;
+}
+
+/* 为上传按钮添加容器 */
+.vditor .vditor-toolbar__upload .vditor-tooltipped {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: calc(var(--toolbar-height) - 4px) !important;
+    width: calc(var(--toolbar-height) - 4px) !important;
+}
+
+/* 确保所有按钮垂直居中并整体水平居中 */
+.vditor .vditor-toolbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* 调整工具栏高度 */
+.vditor .vditor-toolbar {
+    --toolbar-height: 25px !important;
+    height: var(--toolbar-height) !important;
+    margin-top: 5px;
+}
+
+.vditor .vditor-toolbar__item .vditor-tooltipped {
+    height: var(--toolbar-height) !important;
+    padding: 0 5px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vditor .vditor-toolbar__item svg {
+    height: 15px !important;
+    width: 15px !important;
+}
+
+/* 大纲透明背景与悬停效果 */
+.vditor-outline {
+    background-color: transparent !important;
+    user-select: none !important;
+}
+
+.vditor-outline__title {
+    background-color: transparent !important;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2) !important;
+}
+
+.vditor-outline li > span {
+    background-color: transparent !important;
+    transition: background-color 0.2s ease, border-radius 0.2s ease;
+}
+
+.vditor-outline li > span:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+}
+
+.vditor-outline__action {
+    background-color: transparent !important;
+}
+
+/* 其他现有样式保持不变 */
+.vditor .vditor-reset {
+    background-color: transparent !important;
+}
+
+.vditor .vditor-toolbar {
+    --toolbar-background-color: rgba(255, 255, 255, 0.1) !important;
+    background-color: transparent !important;
+    border-bottom: none !important;
+}
+
+.vditor .vditor-toolbar button {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 4px;
+    margin: 2px;
+}
+
+.vditor .vditor-panel {
+    --panel-background-color: rgba(20, 20, 20, 0.85) !important;
+}
+
+.vditor .vditor-sv {
+    --textarea-background-color: transparent !important;
+}
+
+/* 重置滚动条样式，使用VSCode默认样式 */
+.vditor-ir {
+    scrollbar-width: auto !important;
+    scrollbar-color: auto !important;
+}
+
+.vditor-ir::-webkit-scrollbar {
+    width: auto !important;
+    background: transparent !important;
+}
+
+.vditor-ir::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.vditor-ir::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbarSlider-background) !important;
+    border-radius: 0 !important;
+}
+
+.vditor-ir::-webkit-scrollbar-thumb:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground) !important;
+}
+
+.vditor-ir::-webkit-scrollbar-thumb:active {
+    background: var(--vscode-scrollbarSlider-activeBackground) !important;
+}
+
+/* 确保编辑器内容区域的滚动条也使用默认样式 */
+.vditor-reset {
+    scrollbar-width: auto !important;
+    scrollbar-color: auto !important;
+}
+
+.vditor-reset::-webkit-scrollbar {
+    width: auto !important;
+    background: transparent !important;
+}
+
+.vditor-reset::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.vditor-reset::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbarSlider-background) !important;
+    border-radius: 0 !important;
+}
+
+.vditor-reset::-webkit-scrollbar-thumb:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground) !important;
+}
+
+.vditor-reset::-webkit-scrollbar-thumb:active {
+    background: var(--vscode-scrollbarSlider-activeBackground) !important;
+}
+
+.vditor--dark {
+    --textarea-text-color: rgba(255, 255, 255, 0.9) !important;
+    --border-color: rgba(255, 255, 255, 0.1) !important;
+    --toolbar-icon-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.vditor--dark .vditor-reset {
+    color: rgba(255, 255, 255, 0.9) !important;
+}

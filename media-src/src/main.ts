@@ -65,6 +65,7 @@ function initVditor(msg) {
       handleToolbarClick()
       fixTableIr()
       fixPanelHover()
+      setupResizableOutline(msg.options)
     },
     input() {
       inputTimer && clearTimeout(inputTimer)
@@ -95,6 +96,107 @@ function initVditor(msg) {
       },
     },
   })
+}
+
+/**
+ * 设置可调整大小的大纲面板
+ */
+function setupResizableOutline(options: any) {
+  if (!options) return
+  
+  const enableResize = options.enableOutlineResize !== false
+  const defaultWidth = options.outlineWidth || 200
+  const position = options.outlinePosition || 'left'
+  
+  // 等待大纲元素加载
+  setTimeout(() => {
+    const outline = document.querySelector('.vditor-outline') as HTMLElement
+    if (!outline) return
+    
+    // 设置初始宽度
+    outline.style.width = `${defaultWidth}px`
+    outline.style.minWidth = '150px'
+    outline.style.maxWidth = '500px'
+    outline.style.position = 'relative'
+    
+    if (!enableResize) return
+    
+    // 创建调整大小的手柄
+    const resizeHandle = document.createElement('div')
+    resizeHandle.className = 'outline-resize-handle'
+    resizeHandle.style.cssText = `
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: transparent;
+      cursor: col-resize;
+      z-index: 1000;
+      transition: background-color 0.2s ease;
+      ${position === 'left' ? 'right: 0;' : 'left: 0;'}
+    `
+    
+    // 添加悬停效果
+    resizeHandle.addEventListener('mouseenter', () => {
+      resizeHandle.style.backgroundColor = 'var(--vscode-sash-hoverBorder, rgba(0, 122, 255, 0.5))'
+    })
+    
+    resizeHandle.addEventListener('mouseleave', () => {
+      resizeHandle.style.backgroundColor = 'transparent'
+    })
+    
+    outline.appendChild(resizeHandle)
+    
+    // 拖拽调整大小的逻辑
+    let isResizing = false
+    let startX = 0
+    let startWidth = 0
+    
+    resizeHandle.addEventListener('mousedown', (e) => {
+      isResizing = true
+      startX = e.clientX
+      startWidth = outline.offsetWidth
+      
+      document.body.style.cursor = 'col-resize'
+      document.body.style.userSelect = 'none'
+      
+      e.preventDefault()
+    })
+    
+    document.addEventListener('mousemove', (e) => {
+      if (!isResizing) return
+      
+      const deltaX = position === 'left' ? (e.clientX - startX) : (startX - e.clientX)
+      const newWidth = Math.max(150, Math.min(500, startWidth + deltaX))
+      
+      outline.style.width = `${newWidth}px`
+      
+      // 发送宽度变化到VS Code配置
+      vscode.postMessage({
+        command: 'update-outline-width',
+        width: newWidth
+      })
+    })
+    
+    document.addEventListener('mouseup', () => {
+      if (isResizing) {
+        isResizing = false
+        document.body.style.cursor = ''
+        document.body.style.userSelect = ''
+      }
+    })
+    
+    // 添加双击重置宽度的功能
+    resizeHandle.addEventListener('dblclick', () => {
+      const resetWidth = options.outlineWidth || 200
+      outline.style.width = `${resetWidth}px`
+      
+      vscode.postMessage({
+        command: 'update-outline-width',
+        width: resetWidth
+      })
+    })
+  }, 100)
 }
 
 window.addEventListener('message', (e) => {

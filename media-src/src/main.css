@@ -71,3 +71,66 @@ body[data-use-vscode-theme-color="1"] .vditor {
 .jconfirm-buttons button {
   text-transform: none!important;
 }
+
+/* 大纲调整手柄样式 */
+.outline-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 1000;
+  transition: background-color 0.2s ease;
+}
+
+.outline-resize-handle:hover {
+  background-color: var(--vscode-sash-hoverBorder, rgba(0, 122, 255, 0.5)) !important;
+}
+
+.outline-resize-handle:active {
+  background-color: var(--vscode-sash-activeBorder, rgba(0, 122, 255, 0.8)) !important;
+}
+
+/* 大纲面板增强样式 */
+.vditor-outline {
+  transition: width 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* 调整大小时的视觉反馈 */
+.vditor-outline.resizing {
+  user-select: none;
+  pointer-events: none;
+}
+
+.vditor-outline.resizing .outline-resize-handle {
+  background-color: var(--vscode-sash-activeBorder, rgba(0, 122, 255, 0.8)) !important;
+}
+
+/* 大纲项目点击区域增强样式 */
+.vditor-outline li {
+  position: relative;
+}
+
+.vditor-outline li[data-has-children="true"] > span {
+  cursor: pointer;
+  padding-left: 20px;
+  position: relative;
+}
+
+.vditor-outline li[data-has-children="true"] > span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.vditor-outline li[data-has-children="true"] > span:hover::before {
+  background-color: rgba(255, 255, 255, 0.1);
+}

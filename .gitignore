@@ -62,4 +62,4 @@ lib
 out
 
 
-media/dist
+media/dist/*
