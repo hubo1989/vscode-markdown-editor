@@ -3,9 +3,27 @@
  */
 import { keyboard } from '@testing-library/user-event/dist/keyboard'
 import $ from 'jquery'
-import { i18n } from 'vditor/src/ts/i18n/index'
-import { updateHotkeyTip } from 'vditor/src/ts/util/compatibility'
+// import { i18n } from 'vditor/src/ts/i18n/index'
+// import { updateHotkeyTip } from 'vditor/src/ts/util/compatibility'
 import { lang } from './lang'
+
+// Temporary i18n implementation
+const i18n = {
+  [lang]: {
+    alignLeft: 'Align Left',
+    alignCenter: 'Align Center', 
+    alignRight: 'Align Right',
+    insertRowAbove: 'Insert Row Above',
+    insertRowBelow: 'Insert Row Below',
+    insertColumnLeft: 'Insert Column Left',
+    insertColumnRight: 'Insert Column Right',
+    'delete-row': 'Delete Row',
+    'delete-column': 'Delete Column'
+  }
+}
+
+// Temporary updateHotkeyTip implementation
+const updateHotkeyTip = (tip: string) => tip
 
 const tablePanelId = 'fix-table-ir-wrapper'
 let disableVscodeHotkeys = false

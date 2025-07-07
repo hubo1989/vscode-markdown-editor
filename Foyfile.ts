@@ -11,7 +11,7 @@ task('watch', async (ctx) => {
 task('build', async (ctx) => {
   await Promise.all([
     ctx.exec('tsc -p ./'),
-    ctx.cd('./media-src').exec('pnpm build'),
+    ctx.cd('./media-src').exec('bun run build'),
   ])
   await ctx.exec('git add -A')
 })
