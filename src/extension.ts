@@ -203,6 +203,19 @@ class EditorPanel {
         // 重新生成HTML以应用新的CSS配置
         this._panel.webview.html = this._getHtmlForWebview(this._panel.webview)
       }
+      
+      // 监听大纲显示设置变化
+      if (e.affectsConfiguration('markdown-editor.showOutlineByDefault') ||
+          e.affectsConfiguration('markdown-editor.useVscodeThemeColor')) {
+        // 发送配置更新消息给webview
+        this._panel.webview.postMessage({
+          command: 'config-update',
+          config: {
+            showOutlineByDefault: EditorPanel.config.get<boolean>('showOutlineByDefault'),
+            useVscodeThemeColor: EditorPanel.config.get<boolean>('useVscodeThemeColor')
+          }
+        })
+      }
     }, this._disposables)
     // Handle messages from the webview
     this._panel.webview.onDidReceiveMessage(
@@ -232,6 +245,9 @@ class EditorPanel {
               options: {
                 useVscodeThemeColor: EditorPanel.config.get<boolean>(
                   'useVscodeThemeColor'
+                ),
+                showOutlineByDefault: EditorPanel.config.get<boolean>(
+                  'showOutlineByDefault'
                 ),
                 ...this._context.globalState.get(KeyVditorOptions),
               },
