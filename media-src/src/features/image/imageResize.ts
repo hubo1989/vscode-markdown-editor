@@ -30,6 +30,9 @@ let resizeContainer: HTMLElement | null = null;
 export function initImageResize(): void {
   console.log('初始化图片大小调整功能');
   
+  // 添加全局样式
+  addGlobalStyles();
+  
   // 延迟初始化，确保 Vditor 完全加载
   setTimeout(() => {
     setupImageResizeHandlers();
@@ -83,6 +86,138 @@ export function initImageResize(): void {
 }
 
 /**
+ * 添加全局样式
+ */
+function addGlobalStyles(): void {
+  const styleId = 'image-resize-styles';
+  if (document.getElementById(styleId)) {
+    return;
+  }
+  
+  const style = document.createElement('style');
+  style.id = styleId;
+  style.textContent = `
+    /* 图片调整大小时的全局样式 */
+    body.image-resizing {
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      -ms-user-select: none !important;
+    }
+    
+    /* 防止图片拖拽 */
+    .vditor-ir img,
+    .vditor-wysiwyg img {
+      user-drag: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+    }
+    
+    /* 图片边缘检测时的样式 */
+    .vditor-ir img[data-on-edge="true"],
+    .vditor-wysiwyg img[data-on-edge="true"] {
+      outline: 1px solid rgba(74, 144, 226, 0.5) !important;
+    }
+    
+    /* 调整大小容器样式 */
+    .image-resize-container {
+      transition: all 0.1s ease;
+      background: rgba(74, 144, 226, 0.1) !important;
+      border: 2px solid rgba(74, 144, 226, 0.8) !important;
+    }
+  `;
+  
+  document.head.appendChild(style);
+}
+
+/**
+ * 处理图片鼠标移动事件 - 检测是否在边缘
+ */
+function handleImageMouseMove(image: HTMLImageElement, event: MouseEvent): void {
+  const rect = image.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  
+  // 边缘检测区域的宽度（像素）
+  const edgeSize = 10;
+  
+  // 检测是否在边缘
+  const isOnEdge = (
+    x <= edgeSize || // 左边缘
+    y <= edgeSize || // 上边缘
+    x >= rect.width - edgeSize || // 右边缘
+    y >= rect.height - edgeSize // 下边缘
+  );
+  
+  if (isOnEdge) {
+    // 在边缘，设置拖拽光标
+    const direction = getResizeDirection(image, event);
+    if (direction) {
+      const cursor = getResizeCursor(direction);
+      image.style.cursor = cursor;
+      image.dataset.onEdge = 'true';
+      
+      // 显示细微的边框提示（可选）
+      image.style.outline = '1px solid rgba(74, 144, 226, 0.5)';
+    }
+  } else {
+    // 不在边缘，恢复正常状态
+    image.style.cursor = '';
+    image.style.outline = '';
+    image.dataset.onEdge = 'false';
+  }
+}
+
+/**
+ * 获取调整大小方向
+ */
+function getResizeDirection(image: HTMLImageElement, event: MouseEvent): string | null {
+  const rect = image.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  
+  // 边缘检测区域的宽度
+  const edgeSize = 10;
+  
+  // 角落优先级最高
+  if (x <= edgeSize && y <= edgeSize) return 'nw';
+  if (x >= rect.width - edgeSize && y <= edgeSize) return 'ne';
+  if (x <= edgeSize && y >= rect.height - edgeSize) return 'sw';
+  if (x >= rect.width - edgeSize && y >= rect.height - edgeSize) return 'se';
+  
+  // 边缘
+  if (x <= edgeSize) return 'w';
+  if (x >= rect.width - edgeSize) return 'e';
+  if (y <= edgeSize) return 'n';
+  if (y >= rect.height - edgeSize) return 's';
+  
+  return null;
+}
+
+/**
+ * 根据方向获取光标样式
+ */
+function getResizeCursor(direction: string): string {
+  switch (direction) {
+    case 'nw':
+    case 'se':
+      return 'nw-resize';
+    case 'ne':
+    case 'sw':
+      return 'ne-resize';
+    case 'n':
+    case 's':
+      return 'n-resize';
+    case 'e':
+    case 'w':
+      return 'e-resize';
+    default:
+      return 'default';
+  }
+}
+
+/**
  * 设置图片调整大小处理器
  */
 function setupImageResizeHandlers(): void {
@@ -105,15 +240,19 @@ function setupImageResizeHandlers(): void {
     
     imageElement.dataset.resizeEnabled = 'true';
     
-    // 绑定鼠标事件
-    imageElement.addEventListener('mouseenter', () => {
-      console.log('Mouse enter image:', imageElement.src);
-      showResizeHandles(imageElement);
+    // 绑定鼠标移动事件来检测边缘
+    imageElement.addEventListener('mousemove', (e) => {
+      handleImageMouseMove(imageElement, e);
     });
     
     imageElement.addEventListener('mouseleave', (e) => {
       console.log('Mouse leave image:', imageElement.src);
-      // 延迟隐藏，允许鼠标移动到调整手柄
+      // 恢复图片的正常状态
+      imageElement.style.cursor = '';
+      
+      // 清除边缘状态
+      imageElement.dataset.onEdge = 'false';
+      
       setTimeout(() => {
         if (!resizeState?.isResizing) {
           hideResizeHandles(imageElement);
@@ -123,176 +262,55 @@ function setupImageResizeHandlers(): void {
     
     imageElement.addEventListener('click', (e) => {
       console.log('Click image:', imageElement.src);
+      
       // 如果正在拖拽，不处理点击事件
       if (resizeState?.isResizing) {
         e.preventDefault();
         e.stopPropagation();
         return;
       }
+      
+      // 如果鼠标在边缘，禁用点击
+      if (imageElement.dataset.onEdge === 'true') {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      
       e.stopPropagation();
       selectImage(imageElement);
     });
-  });
-}
-
-/**
- * 显示调整大小手柄
- */
-function showResizeHandles(image: HTMLImageElement): void {
-  console.log('Showing resize handles for image:', image.src);
-  
-  hideAllResizeHandles();
-  
-  // 创建调整大小容器
-  const container = document.createElement('div');
-  container.className = 'image-resize-container';
-  container.style.cssText = `
-    position: absolute;
-    border: none;
-    pointer-events: none;
-    z-index: 1000;
-    box-sizing: border-box;
-  `;
-  
-  // 创建调整手柄
-  const handles: ResizeHandle[] = [
-    { element: createHandle('nw'), direction: 'nw' },
-    { element: createHandle('ne'), direction: 'ne' },
-    { element: createHandle('sw'), direction: 'sw' },
-    { element: createHandle('se'), direction: 'se' },
-    { element: createHandle('n'), direction: 'n' },
-    { element: createHandle('s'), direction: 's' },
-    { element: createHandle('e'), direction: 'e' },
-    { element: createHandle('w'), direction: 'w' }
-  ];
-  
-  handles.forEach(handle => {
-    container.appendChild(handle.element);
-    handle.element.addEventListener('mousedown', (e) => {
-      console.log('Handle mousedown:', handle.direction);
-      e.preventDefault();
-      e.stopPropagation();
-      startResize(image, handle.direction, e);
+    
+    // 绑定鼠标按下事件来开始拖拽
+    imageElement.addEventListener('mousedown', (e) => {
+      // 只有在边缘才能开始拖拽
+      if (imageElement.dataset.onEdge === 'true') {
+        const direction = getResizeDirection(imageElement, e);
+        if (direction) {
+          e.preventDefault();
+          e.stopPropagation();
+          startResize(imageElement, direction, e);
+        }
+      }
     });
   });
-  
-  // 定位容器
-  updateResizeContainer(image, container);
-  
-  // 添加到文档
-  document.body.appendChild(container);
-  
-  resizeContainer = container;
-  activeImage = image;
-  
-  console.log('Resize handles created and positioned');
-}
-
-/**
- * 创建调整手柄
- */
-function createHandle(direction: string): HTMLElement {
-  const handle = document.createElement('div');
-  handle.className = `resize-handle resize-handle-${direction}`;
-  
-  let cursor = 'nw-resize';
-  switch (direction) {
-    case 'nw':
-    case 'se':
-      cursor = 'nw-resize';
-      break;
-    case 'ne':
-    case 'sw':
-      cursor = 'ne-resize';
-      break;
-    case 'n':
-    case 's':
-      cursor = 'n-resize';
-      break;
-    case 'e':
-    case 'w':
-      cursor = 'e-resize';
-      break;
-  }
-  
-  handle.style.cssText = `
-    position: absolute;
-    background: transparent;
-    border: none;
-    pointer-events: all;
-    cursor: ${cursor};
-    box-sizing: border-box;
-  `;
-  
-  // 定位手柄 - 增加拖拽区域的大小，但保持透明
-  switch (direction) {
-    case 'nw':
-      handle.style.top = handle.style.left = '-10px';
-      handle.style.width = handle.style.height = '20px';
-      break;
-    case 'ne':
-      handle.style.top = handle.style.right = '-10px';
-      handle.style.width = handle.style.height = '20px';
-      break;
-    case 'sw':
-      handle.style.bottom = handle.style.left = '-10px';
-      handle.style.width = handle.style.height = '20px';
-      break;
-    case 'se':
-      handle.style.bottom = handle.style.right = '-10px';
-      handle.style.width = handle.style.height = '20px';
-      break;
-    case 'n':
-      handle.style.top = '-10px';
-      handle.style.left = '10px';
-      handle.style.right = '10px';
-      handle.style.height = '20px';
-      break;
-    case 's':
-      handle.style.bottom = '-10px';
-      handle.style.left = '10px';
-      handle.style.right = '10px';
-      handle.style.height = '20px';
-      break;
-    case 'e':
-      handle.style.right = '-10px';
-      handle.style.top = '10px';
-      handle.style.bottom = '10px';
-      handle.style.width = '20px';
-      break;
-    case 'w':
-      handle.style.left = '-10px';
-      handle.style.top = '10px';
-      handle.style.bottom = '10px';
-      handle.style.width = '20px';
-      break;
-  }
-  
-  return handle;
-}
-
-/**
- * 更新调整大小容器位置
- */
-function updateResizeContainer(image: HTMLImageElement, container: HTMLElement): void {
-  const rect = image.getBoundingClientRect();
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-  
-  container.style.left = `${rect.left + scrollLeft}px`;
-  container.style.top = `${rect.top + scrollTop}px`;
-  container.style.width = `${rect.width}px`;
-  container.style.height = `${rect.height}px`;
 }
 
 /**
  * 隐藏调整大小手柄
  */
 function hideResizeHandles(image: HTMLImageElement): void {
-  if (resizeContainer && activeImage === image) {
-    resizeContainer.remove();
-    resizeContainer = null;
+  // 这个函数现在只是清理图片状态，不再需要处理调整手柄
+  if (activeImage === image) {
     activeImage = null;
+    
+    // 恢复图片的正常状态
+    image.style.cursor = '';
+    image.style.outline = '';
+    image.dataset.onEdge = 'false';
+    
+    // 恢复全局光标
+    document.body.style.cursor = '';
   }
 }
 
@@ -300,10 +318,8 @@ function hideResizeHandles(image: HTMLImageElement): void {
  * 隐藏所有调整大小手柄
  */
 function hideAllResizeHandles(): void {
-  if (resizeContainer) {
-    resizeContainer.remove();
-    resizeContainer = null;
-    activeImage = null;
+  if (activeImage) {
+    hideResizeHandles(activeImage);
   }
 }
 
@@ -311,8 +327,8 @@ function hideAllResizeHandles(): void {
  * 选择图片
  */
 function selectImage(image: HTMLImageElement): void {
-  hideAllResizeHandles();
-  showResizeHandles(image);
+  // 不再显示蓝色遮罩，只在边缘处理拖拽
+  console.log('Image selected:', image.src);
 }
 
 /**
@@ -342,6 +358,22 @@ function startResize(image: HTMLImageElement, direction: string, event: MouseEve
       break;
   }
   
+  // 创建临时的调整容器用于显示边框（可选）
+  const tempContainer = document.createElement('div');
+  tempContainer.className = 'image-resize-container';
+  tempContainer.style.cssText = `
+    position: absolute;
+    border: 2px solid rgba(74, 144, 226, 0.8);
+    pointer-events: none;
+    z-index: 1000;
+    box-sizing: border-box;
+    background: rgba(74, 144, 226, 0.1);
+  `;
+  
+  // 定位容器
+  updateResizeContainer(image, tempContainer);
+  document.body.appendChild(tempContainer);
+  
   resizeState = {
     isResizing: true,
     startX: event.clientX,
@@ -351,7 +383,7 @@ function startResize(image: HTMLImageElement, direction: string, event: MouseEve
     aspectRatio: rect.width / rect.height,
     direction,
     image,
-    resizeContainer: resizeContainer!
+    resizeContainer: tempContainer
   };
   
   // 添加调整大小时的样式到整个文档
@@ -363,14 +395,23 @@ function startResize(image: HTMLImageElement, direction: string, event: MouseEve
   image.style.cursor = cursor + ' !important';
   image.style.pointerEvents = 'none';
   
-  // 给调整容器添加拖拽状态
-  if (resizeContainer) {
-    resizeContainer.style.cursor = cursor + ' !important';
-  }
-  
   // 阻止默认行为
   event.preventDefault();
   event.stopPropagation();
+}
+
+/**
+ * 更新调整大小容器位置
+ */
+function updateResizeContainer(image: HTMLImageElement, container: HTMLElement): void {
+  const rect = image.getBoundingClientRect();
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  
+  container.style.left = `${rect.left + scrollLeft}px`;
+  container.style.top = `${rect.top + scrollTop}px`;
+  container.style.width = `${rect.width}px`;
+  container.style.height = `${rect.height}px`;
 }
 
 /**
@@ -469,7 +510,12 @@ function handleMouseMove(event: MouseEvent): void {
 function handleMouseUp(event: MouseEvent): void {
   if (!resizeState?.isResizing) return;
   
-  const { image } = resizeState;
+  const { image, resizeContainer } = resizeState;
+  
+  // 清理临时容器
+  if (resizeContainer) {
+    resizeContainer.remove();
+  }
   
   // 清理调整大小状态
   resizeState = null;
@@ -482,14 +528,13 @@ function handleMouseUp(event: MouseEvent): void {
   // 恢复图片样式
   image.style.cursor = '';
   image.style.pointerEvents = '';
-  
-  // 恢复调整容器样式
-  if (resizeContainer) {
-    resizeContainer.style.cursor = '';
-  }
+  image.style.outline = '';
+  image.dataset.onEdge = 'false';
   
   // 更新 Markdown 内容
   updateMarkdownImageSize(image);
+  
+  console.log('Resize completed');
 }
 
 /**
@@ -604,6 +649,3 @@ export function debugImageResize(): void {
   // 重新设置处理器
   setupImageResizeHandlers();
 }
-
-// 将调试函数添加到 window 对象，方便控制台调用
-(window as any).debugImageResize = debugImageResize;
