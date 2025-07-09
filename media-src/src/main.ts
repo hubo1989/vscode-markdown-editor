@@ -10,6 +10,10 @@ import { initVditor } from './core/editorInit';
 import { handleUploadedFiles } from './features/upload/uploadHandler';
 import { sendMessageToVSCode } from './utils/common';
 import { UpdateMessage } from './types';
+import { updateToolbarVisibility } from './features/toolbar/toolbarHandler';
+import { updateCssFile, reloadAllCss, findCssLinkTag, handleCssFileDeleted } from './features/css/cssHandler';
+
+
 
 /**
  * 初始化应用
@@ -63,31 +67,38 @@ function initializeApp(): void {
         if (message.config && window.vditor) {
           // 更新工具栏显示/隐藏状态
           if (message.config.showToolbar !== undefined) {
-            try {
-              console.log('Updating toolbar visibility:', message.config.showToolbar);
-              
-              // 更新选项
-              window.vditor.vditor.options.toolbarConfig.hide = !message.config.showToolbar;
-              
-              // 直接重新初始化工具栏
-              const toolbar = document.querySelector('.vditor-toolbar');
-              if (toolbar) {
-                if (message.config.showToolbar) {
-                  // 显示工具栏
-                  toolbar.classList.remove('vditor-toolbar--hide');
-                  toolbar.setAttribute('style', 'display: block !important');
-                } else {
-                  // 隐藏工具栏
-                  toolbar.classList.add('vditor-toolbar--hide');
-                  toolbar.setAttribute('style', 'display: none !important');
-                }
-              }
-            } catch (error) {
-              console.error('Error updating toolbar visibility:', error);
-            }
+            updateToolbarVisibility(message.config.showToolbar);
           }
           
           // 其他配置更新可以在这里处理
+        }
+        break;
+      }
+      case 'update-css': {
+        // 处理单个CSS文件更新
+        if (message.cssFile && message.uri) {
+          updateCssFile(message.cssFile, message.uri, message.timestamp);
+        }
+        break;
+      }
+      
+      case 'reload-all-css': {
+        // 重新加载所有CSS文件
+        if (message.config) {
+          try {
+            console.log('Reloading all CSS files');
+            reloadAllCss(message.config);
+          } catch (error) {
+            console.error('Error reloading CSS files:', error);
+          }
+        }
+        break;
+      }
+      
+      case 'css-file-deleted': {
+        // 处理CSS文件被删除的情况
+        if (message.cssFile) {
+          handleCssFileDeleted(message.cssFile);
         }
         break;
       }
