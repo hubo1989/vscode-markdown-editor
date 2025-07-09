@@ -3,6 +3,8 @@
  * 在 Vditor 所见即所得模式下支持鼠标拖拽调整图片大小
  */
 
+import { sendMessageToVSCode } from '../../utils/common';
+
 interface ResizeHandle {
   element: HTMLElement;
   direction: 'nw' | 'ne' | 'sw' | 'se' | 'n' | 's' | 'e' | 'w';
@@ -512,6 +514,18 @@ function handleMouseUp(event: MouseEvent): void {
   
   const { image, resizeContainer } = resizeState;
   
+  console.log('拖拽结束，开始更新图片尺寸');
+  
+  // 获取最终的尺寸
+  const finalWidth = Math.round(parseFloat(image.style.width));
+  const finalHeight = Math.round(parseFloat(image.style.height));
+  
+  console.log(`最终尺寸: ${finalWidth}x${finalHeight}`);
+  
+  // 更新图片的属性
+  image.setAttribute('width', finalWidth.toString());
+  image.setAttribute('height', finalHeight.toString());
+  
   // 清理临时容器
   if (resizeContainer) {
     resizeContainer.remove();
@@ -541,11 +555,18 @@ function handleMouseUp(event: MouseEvent): void {
  * 更新 Markdown 中的图片尺寸
  */
 function updateMarkdownImageSize(image: HTMLImageElement): void {
-  if (!window.vditor) return;
+  console.log('开始更新图片尺寸到 Markdown');
+  
+  if (!window.vditor) {
+    console.warn('window.vditor 不存在，无法更新内容');
+    return;
+  }
   
   // 获取图片的新尺寸
   const width = Math.round(parseFloat(image.style.width));
   const height = Math.round(parseFloat(image.style.height));
+  
+  console.log(`新的图片尺寸: ${width}x${height}`);
   
   // 获取当前的 Markdown 内容
   const content = window.vditor.getValue();
@@ -553,6 +574,8 @@ function updateMarkdownImageSize(image: HTMLImageElement): void {
   // 获取图片的 src 属性
   const src = image.getAttribute('src') || '';
   const alt = image.getAttribute('alt') || '';
+  
+  console.log(`图片信息: src="${src}", alt="${alt}"`);
   
   // 生成新的 HTML 标签
   const newImgTag = `<img src="${src}" alt="${alt}" width="${width}" height="${height}">`;
@@ -565,16 +588,43 @@ function updateMarkdownImageSize(image: HTMLImageElement): void {
   
   // 替换现有的 HTML 图片标签
   if (imgRegex.test(content)) {
+    console.log('找到 HTML 图片标签，进行替换');
     newContent = content.replace(imgRegex, newImgTag);
   }
   // 替换 Markdown 格式的图片
   else if (markdownImgRegex.test(content)) {
+    console.log('找到 Markdown 图片语法，进行替换');
     newContent = content.replace(markdownImgRegex, newImgTag);
+  }
+  else {
+    console.log('未找到匹配的图片标签，尝试其他方式');
+    // 如果找不到匹配的标签，尝试更宽松的匹配
+    const looseSrcRegex = new RegExp(`<img[^>]*src=["']?[^"']*${escapeRegExp(src.split('/').pop() || '')}[^"']*["']?[^>]*>`, 'g');
+    if (looseSrcRegex.test(content)) {
+      console.log('使用宽松匹配找到图片标签');
+      newContent = content.replace(looseSrcRegex, newImgTag);
+    }
   }
   
   // 如果内容有变化，更新 Vditor
   if (newContent !== content) {
+    console.log('内容已更改，更新 Vditor');
     window.vditor.setValue(newContent);
+    
+    // 直接触发与用户输入相同的同步逻辑
+    setTimeout(() => {
+      if (window.vditor) {
+        // 发送 edit 消消息到 VS Code，与用户输入时使用相同的逻辑
+        sendMessageToVSCode({
+          command: 'edit',
+          content: newContent
+        });
+        
+        console.log('已发送 edit 消息到 VS Code');
+      }
+    }, 100);
+  } else {
+    console.log('内容未发生变化');
   }
 }
 
