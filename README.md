@@ -16,14 +16,18 @@ This fork includes several enhancements and new features:
 
 ![alt text](docs/imgs/image-1.png)
 
+Here is the effect of the new feature:
+
+![alt text](docs/imgs/image-3.png)
 
 - **📋 Resizable Outline Panel** - Enhanced outline functionality
+
   - Drag to resize outline panel width
   - Double-click to reset outline width
   - Improved outline item styling and click areas
   - Better toolbar alignment
-
 - **⚙️ Enhanced Editor Options**
+
   - Configurable outline display settings
   - Optional default editor behavior for .md files
   - Menu button to open markdown files in split view
@@ -55,7 +59,7 @@ New configuration options available:
 - What You See Is What You Get (WYSIWYG)
 - Auto sync changes between the VSCode editor and webview
 - Copy markdown/html
-- Uploaded/pasted/drag-dropped images will be auto-saved to the`assets` folder
+- Uploaded/pasted/drag-dropped images will be auto-saved to the `assets` folder
 - Multi-theme support
 - Shortcut keys
 - Multiple editting modes: instant Rendering mode (**Recommand!**) / WYSIWYG mode / split screen mode
@@ -76,23 +80,23 @@ New configuration options available:
 ### 1. Command mode in markdown file
 
 - open a markdown file
-- type`cmd-shift-p` to enter command mode
-- type`markdown-editor: Open with markdown editor`
+- type `cmd-shift-p` to enter command mode
+- type `markdown-editor: Open with markdown editor`
 
 ### 2. Key bindings
 
 - open a markdown file
-- type`ctrl+shift+alt+m` for win or`cmd+shift+alt+m` for mac
+- type `ctrl+shift+alt+m` for win or `cmd+shift+alt+m` for mac
 
 ### 3. Explorer Context menu
 
 - right click on markdown file
-- then click`Open with markdown editor`
+- then click `Open with markdown editor`
 
 ### 4. Editor title context menu
 
 - right click on a opened markdown file's tab title
-- then click`Open with markdown editor`
+- then click `Open with markdown editor`
 
 ## Development
 

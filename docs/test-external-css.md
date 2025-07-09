@@ -1,12 +1,12 @@
-# 测试外部CSS功能
+# 🎨 External CSS Feature Testing
 
-这个文件用来测试新增的外部CSS加载功能。
+This file is designed to test the newly added external CSS loading functionality.
 
-## 如何测试
+## 🚀 How to Test
 
-1. 打开VS Code设置（`Cmd+,` 或 `Ctrl+,`）
-2. 搜索 `markdown-editor`
-3. 配置以下设置：
+1. Open VS Code settings (`Cmd+,` or `Ctrl+,`)
+2. Search for `markdown-editor`
+3. Configure the following settings:
 
 ```json
 {
@@ -17,62 +17,62 @@
 }
 ```
 
-4. 保存设置
-5. 用markdown编辑器打开这个文件，应该看到梦幻的渐变背景和金色标题
+4. Save the settings
+5. Open this file with the markdown editor - you should see a magical gradient background and golden titles ✨
 
-## 功能演示
+## 🎭 Feature Demo
 
-### 标题样式
+### 📝 Header Styles
 
-# 一级标题
+## H2 Header
 
-## 二级标题
+### H3 Header
 
-### 三级标题
+#### H4 Header
 
-### 代码块样式
+### 💻 Code Block Styles
 
 ```javascript
 function testExternalCSS() {
-    console.log('外部CSS已生效！');
+    console.log('External CSS is working!');
     return true;
 }
 ```
 
-### 内联代码
+### 🔤 Inline Code
 
-这是一个 `内联代码` 示例。
+This is an `inline code` example.
 
-### 链接样式
+### 🔗 Link Styles
 
-[这是一个测试链接](https://github.com)
+[This is a test link](https://github.com)
 
-### 表格样式
+### 📊 Table Styles
 
-| 功能 | 状态 | 说明 |
-|------|------|------|
-| HTTP/HTTPS URL | ✅ | 支持网络CSS资源 |
-| 本地文件路径 | ✅ | 支持绝对和相对路径 |
-| 配置热重载 | ✅ | 修改配置自动生效 |
+| Feature | Status | Description |
+|---------|--------|-------------|
+| HTTP/HTTPS URL | ✅ | Support network CSS resources |
+| Local file path | ✅ | Support absolute and relative paths |
+| Config hot reload | ✅ | Auto-apply configuration changes |
 
-### 引用块样式
->
-> 这是一个引用块，用来测试外部CSS的引用块样式。
-> 应该有金色的左边框和半透明背景。
+### 📋 Blockquote Styles
 
-### 列表样式
+> This is a blockquote used to test external CSS blockquote styles.
+> It should have a golden left border and semi-transparent background.
 
-- 第一项
-- 第二项
-- 第三项
+### 📄 List Styles
 
-1. 有序列表项1
-2. 有序列表项2
-3. 有序列表项3
+- First item
+- Second item
+- Third item
 
-## 多种CSS配置示例
+1. Ordered list item 1
+2. Ordered list item 2
+3. Ordered list item 3
 
-### 使用网络CSS资源
+## ⚙️ Multiple CSS Configuration Examples
+
+### 🌐 Using Network CSS Resources
 
 ```json
 {
@@ -82,7 +82,7 @@ function testExternalCSS() {
 }
 ```
 
-### 使用多个CSS文件
+### 📚 Using Multiple CSS Files
 
 ```json
 {
@@ -94,7 +94,7 @@ function testExternalCSS() {
 }
 ```
 
-### 自定义CSS优先级
+### 🎯 Custom CSS Priority
 
 ```json
 {
@@ -104,4 +104,4 @@ function testExternalCSS() {
 }
 ```
 
-保存这个文件后，试试修改VS Code设置中的CSS配置，编辑器应该会自动应用新的样式！
+After saving this file, try modifying the CSS configuration in VS Code settings - the editor should automatically apply the new styles! 🎉
