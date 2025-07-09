@@ -158,8 +158,17 @@ export class EditorPanel {
             showOutlineByDefault: config.showOutlineByDefault,
             outlinePosition: config.outlinePosition,
             outlineWidth: config.outlineWidth,
-            enableOutlineResize: config.enableOutlineResize,
             useVscodeThemeColor: config.useVscodeThemeColor,
+          }
+        })
+      }
+
+      if (ConfigManager.isToolbarConfigChanged(e)) {
+        const config = ConfigManager.getEditorConfig()
+        this.dependencies.panel.webview.postMessage({
+          command: 'config-update',
+          config: {
+            showToolbar: config.showToolbar
           }
         })
       }

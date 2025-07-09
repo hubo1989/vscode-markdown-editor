@@ -58,6 +58,40 @@ function initializeApp(): void {
         break;
       }
       
+      case 'config-update': {
+        // 处理配置更新
+        if (message.config && window.vditor) {
+          // 更新工具栏显示/隐藏状态
+          if (message.config.showToolbar !== undefined) {
+            try {
+              console.log('Updating toolbar visibility:', message.config.showToolbar);
+              
+              // 更新选项
+              window.vditor.vditor.options.toolbarConfig.hide = !message.config.showToolbar;
+              
+              // 直接重新初始化工具栏
+              const toolbar = document.querySelector('.vditor-toolbar');
+              if (toolbar) {
+                if (message.config.showToolbar) {
+                  // 显示工具栏
+                  toolbar.classList.remove('vditor-toolbar--hide');
+                  toolbar.setAttribute('style', 'display: block !important');
+                } else {
+                  // 隐藏工具栏
+                  toolbar.classList.add('vditor-toolbar--hide');
+                  toolbar.setAttribute('style', 'display: none !important');
+                }
+              }
+            } catch (error) {
+              console.error('Error updating toolbar visibility:', error);
+            }
+          }
+          
+          // 其他配置更新可以在这里处理
+        }
+        break;
+      }
+      
       default:
         // 忽略其他消息
         break;

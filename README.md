@@ -20,12 +20,6 @@ Here is the effect of the new feature:
 
 ![alt text](docs/imgs/image-3.png)
 
-- **📋 Resizable Outline Panel** - Enhanced outline functionality
-
-  - Drag to resize outline panel width
-  - Double-click to reset outline width
-  - Improved outline item styling and click areas
-  - Better toolbar alignment
 - **⚙️ Enhanced Editor Options**
 
   - Configurable outline display settings

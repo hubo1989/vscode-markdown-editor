@@ -5,7 +5,6 @@ export interface VditorOptions {
   showOutlineByDefault?: boolean
   outlinePosition?: string
   outlineWidth?: number
-  enableOutlineResize?: boolean
   [key: string]: any
 }
 
@@ -18,7 +17,8 @@ export interface EditorConfig {
   showOutlineByDefault: boolean
   outlinePosition: 'left' | 'right'
   outlineWidth: number
-  enableOutlineResize: boolean
+  isDefault: boolean
+  showToolbar: boolean
 }
 
 export interface WebviewMessage {

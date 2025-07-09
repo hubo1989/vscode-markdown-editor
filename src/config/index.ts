@@ -11,7 +11,8 @@ export const CONFIG_KEYS = {
   SHOW_OUTLINE_BY_DEFAULT: 'markdown-editor.showOutlineByDefault',
   OUTLINE_POSITION: 'markdown-editor.outlinePosition',
   OUTLINE_WIDTH: 'markdown-editor.outlineWidth',
-  ENABLE_OUTLINE_RESIZE: 'markdown-editor.enableOutlineResize',
+  IS_DEFAULT: 'markdown-editor.isDefault',
+  SHOW_TOOLBAR: 'markdown-editor.showToolbar',
 } as const
 
 export class ConfigManager {
@@ -30,7 +31,8 @@ export class ConfigManager {
       showOutlineByDefault: config.get<boolean>('showOutlineByDefault') || false,
       outlinePosition: config.get<'left' | 'right'>('outlinePosition') || 'left',
       outlineWidth: config.get<number>('outlineWidth') || 300,
-      enableOutlineResize: config.get<boolean>('enableOutlineResize') || true,
+      isDefault: config.get<boolean>('isDefault') || false,
+      showToolbar: config.get<boolean>('showToolbar', true),
     }
   }
 
@@ -49,7 +51,10 @@ export class ConfigManager {
     return e.affectsConfiguration(CONFIG_KEYS.SHOW_OUTLINE_BY_DEFAULT) ||
            e.affectsConfiguration(CONFIG_KEYS.OUTLINE_POSITION) ||
            e.affectsConfiguration(CONFIG_KEYS.OUTLINE_WIDTH) ||
-           e.affectsConfiguration(CONFIG_KEYS.ENABLE_OUTLINE_RESIZE) ||
            e.affectsConfiguration(CONFIG_KEYS.USE_VSCODE_THEME_COLOR)
+  }
+
+  static isToolbarConfigChanged(e: vscode.ConfigurationChangeEvent): boolean {
+    return e.affectsConfiguration(CONFIG_KEYS.SHOW_TOOLBAR)
   }
 }
