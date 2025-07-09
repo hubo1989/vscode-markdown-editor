@@ -29,7 +29,7 @@ body[data-use-vscode-theme-color="1"] .vditor {
 
 /* 修复代码块颜色 - 增强版 */
 .vditor--dark .vditor-reset code:not(.hljs):not(.highlight-chroma) {
-  background-color: rgba(30, 30, 30, 0.8) !important;
+  background-color: rgba(98, 96, 96, 0.433) !important;
 }
 
 /* 修复指定语言的代码块背景色 */
@@ -48,7 +48,7 @@ body[data-use-vscode-theme-color="1"] .vditor {
 .vditor-reset pre.language-css,
 .vditor-reset pre.language-html,
 .vditor-reset pre.language-json {
-  background-color: rgba(241, 239, 235, 0.899) !important;
+  background-color: rgba(221, 226, 221, 0.871) !important;
 }
 
 /* 工具栏增强样式 */
@@ -156,7 +156,7 @@ body[data-use-vscode-theme-color="1"] .vditor {
 .vditor-outline {
   background-color: transparent !important;
   user-select: none !important;
-  transition: width 0.2s ease;
+  transition: width 0.1s ease;
   box-sizing: border-box;
 }
 
@@ -179,25 +179,6 @@ body[data-use-vscode-theme-color="1"] .vditor {
   background-color: transparent !important;
 }
 
-/* 大纲调整手柄样式 */
-.outline-resize-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: transparent;
-  cursor: col-resize;
-  z-index: 1000;
-  transition: background-color 0.2s ease;
-}
-
-.outline-resize-handle:hover {
-  background-color: var(--vscode-sash-hoverBorder, rgba(0, 122, 255, 0.5)) !important;
-}
-
-.outline-resize-handle:active {
-  background-color: var(--vscode-sash-activeBorder, rgba(0, 122, 255, 0.8)) !important;
-}
 
 /* 滚动条样式 - VSCode默认 */
 .vditor-ir,
