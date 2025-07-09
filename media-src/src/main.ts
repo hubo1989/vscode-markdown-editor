@@ -10,6 +10,10 @@ import { initVditor } from './core/editorInit';
 import { handleUploadedFiles } from './features/upload/uploadHandler';
 import { sendMessageToVSCode } from './utils/common';
 import { UpdateMessage } from './types';
+import { updateToolbarVisibility } from './features/toolbar/toolbarHandler';
+import { updateCssFile, reloadAllCss, findCssLinkTag, handleCssFileDeleted } from './features/css/cssHandler';
+
+
 
 /**
  * 初始化应用
@@ -54,6 +58,47 @@ function initializeApp(): void {
         // 处理上传成功后的文件
         if (message.files && Array.isArray(message.files)) {
           handleUploadedFiles(message.files);
+        }
+        break;
+      }
+      
+      case 'config-update': {
+        // 处理配置更新
+        if (message.config && window.vditor) {
+          // 更新工具栏显示/隐藏状态
+          if (message.config.showToolbar !== undefined) {
+            updateToolbarVisibility(message.config.showToolbar);
+          }
+          
+          // 其他配置更新可以在这里处理
+        }
+        break;
+      }
+      case 'update-css': {
+        // 处理单个CSS文件更新
+        if (message.cssFile && message.uri) {
+          updateCssFile(message.cssFile, message.uri, message.timestamp);
+        }
+        break;
+      }
+      
+      case 'reload-all-css': {
+        // 重新加载所有CSS文件
+        if (message.config) {
+          try {
+            console.log('Reloading all CSS files');
+            reloadAllCss(message.config);
+          } catch (error) {
+            console.error('Error reloading CSS files:', error);
+          }
+        }
+        break;
+      }
+      
+      case 'css-file-deleted': {
+        // 处理CSS文件被删除的情况
+        if (message.cssFile) {
+          handleCssFileDeleted(message.cssFile);
         }
         break;
       }

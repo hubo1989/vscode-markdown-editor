@@ -45,6 +45,11 @@
         "category": "markdown-editor",
         "icon": "$(pencil)"
         
+      },
+      {
+        "command": "markdown-editor.toggleDefault",
+        "title": "Toggle Markdown Editor Default Mode",
+        "category": "markdown-editor"
       }
     ],
     "menus": {
@@ -74,6 +79,16 @@
     "configuration": {
       "title": "markdown-editor",
       "properties": {
+        "markdown-editor.isDefault": {
+          "type": "boolean",
+          "default": false,
+          "description": "如果启用，将以Markdown编辑器打开所有Markdown文件。"
+        },
+        "markdown-editor.showToolbar": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用时显示工具栏，禁用时隐藏工具栏。"
+        },
         "markdown-editor.imageSaveFolder": {
           "type": "string",
           "default": "assets",
@@ -119,12 +134,7 @@
           "default": 200,
           "minimum": 150,
           "maximum": 500,
-          "description": "Default width of the outline panel in pixels. Can be adjusted manually by dragging the resize handle."
-        },
-        "markdown-editor.enableOutlineResize": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable manual resizing of the outline panel by dragging."
+          "description": "Default width of the outline panel in pixels."
         }
       }
     },
@@ -145,7 +155,19 @@
             "filenamePattern": "*.md"
           }
         ],
-        "priority": "option"
+        "priority": "default",
+        "when": "config.markdown-editor.isDefault"
+      },
+      {
+        "viewType": "markdown-editor.editor",
+        "displayName": "Markdown Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.md"
+          }
+        ],
+        "priority": "option",
+        "when": "!config.markdown-editor.isDefault"
       }
     ]
   },

@@ -76,7 +76,10 @@ export function initVditor(message: UpdateMessage): void {
       mode: 'ir',
       cache: { enable: false },
       toolbar,
-      toolbarConfig: { pin: true },
+      toolbarConfig: { 
+        pin: true,
+        hide: message.options?.showToolbar === false
+      },
       outline: {
         enable: message.options?.showOutlineByDefault ?? false,
         position: message.options?.outlinePosition ?? 'left'
@@ -88,6 +91,19 @@ export function initVditor(message: UpdateMessage): void {
         setupToolbarClickHandler();
         setupTableFeatures();
         setupPanelHoverEffects();
+        
+        // 调试工具栏设置
+        console.log('Toolbar config after init:', {
+          showToolbar: message.options?.showToolbar,
+          hide: window.vditor.vditor.options.toolbarConfig.hide
+        });
+        
+        // 确保工具栏状态与设置一致
+        const toolbar = document.querySelector('.vditor-toolbar');
+        if (toolbar && message.options?.showToolbar === false) {
+          toolbar.classList.add('vditor-toolbar--hide');
+          toolbar.setAttribute('style', 'display: none !important');
+        }
       },
       input() {
         // 处理输入事件，添加节流

@@ -19,8 +19,8 @@ export interface EditorOptions {
   showOutlineByDefault?: boolean;
   outlinePosition?: 'left' | 'right';
   outlineWidth?: number;
-  enableOutlineResize?: boolean;
   useVscodeThemeColor?: boolean;
+  showToolbar?: boolean;
   [key: string]: any;
 }
 
