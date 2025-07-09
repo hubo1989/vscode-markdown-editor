@@ -14,5 +14,5 @@
     "noUnusedParameters": false,
     "noImplicitReturns": false,
   },
-  "include": ["./src"]
+  // "include": ["src_deprecated"]
 }

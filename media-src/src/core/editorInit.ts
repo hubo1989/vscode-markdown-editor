@@ -5,7 +5,7 @@ import { merge } from 'lodash';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 import { EditorOptions, UpdateMessage } from '../types';
-import { setupThemeHandler, setupToolbarClickHandler } from '../core/editorConfig';
+import { setupThemeHandler, setupToolbarClickHandler } from './editorConfig';
 import { setupPanelHoverEffects } from '../components/panelHover';
 import { setupTableFeatures } from '../features/table/tableEditor';
 import { setupResizableOutline } from '../features/outline/resizableOutline';
