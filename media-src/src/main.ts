@@ -12,6 +12,7 @@ import { sendMessageToVSCode } from './utils/common';
 import { UpdateMessage } from './types';
 import { updateToolbarVisibility } from './features/toolbar/toolbarHandler';
 import { updateCssFile, reloadAllCss, findCssLinkTag, handleCssFileDeleted } from './features/css/cssHandler';
+import { initImageResize } from './features/image/imageResize';
 
 
 
@@ -24,6 +25,9 @@ function initializeApp(): void {
   
   // 修复剪切功能
   fixCut();
+  
+  // 初始化图片调整大小功能
+  initImageResize();
   
   // 处理消息事件
   window.addEventListener('message', (event: MessageEvent) => {

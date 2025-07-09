@@ -180,12 +180,6 @@ body[data-use-vscode-theme-color="1"] .vditor {
 }
 
 
-/* 滚动条样式 - VSCode默认 */
-.vditor-ir,
-.vditor-reset {
-  scrollbar-width: auto !important;
-  scrollbar-color: auto !important;
-}
 
 .vditor-ir::-webkit-scrollbar,
 .vditor-reset::-webkit-scrollbar {
@@ -233,3 +227,5 @@ body[data-use-vscode-theme-color="1"] .vditor {
 .jconfirm-buttons button {
   text-transform: none !important;
 }
+
+

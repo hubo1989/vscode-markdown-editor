@@ -11,6 +11,7 @@ import { setupTableFeatures } from '../features/table/tableEditor';
 import { toolbar } from '../features/toolbar/toolbarConfig';
 import { createUploadConfig } from '../features/upload/uploadHandler';
 import { sendMessageToVSCode } from '../utils/common';
+import { initImageResize } from '../features/image/imageResize';
 
 // 输入节流定时器
 let inputTimer: ReturnType<typeof setTimeout> | null = null;
@@ -91,6 +92,11 @@ export function initVditor(message: UpdateMessage): void {
         setupToolbarClickHandler();
         setupTableFeatures();
         setupPanelHoverEffects();
+        
+        // 初始化图片调整大小功能
+        setTimeout(() => {
+          initImageResize();
+        }, 100);
         
         // 调试工具栏设置
         console.log('Toolbar config after init:', {
