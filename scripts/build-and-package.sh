@@ -7,17 +7,23 @@ set -e  # Exit on any error
 
 echo "🚀 Starting complete build and package process..."
 
-# Step 1: Build media-src
+# Step 1: Clean old build files
+echo "🧹 Cleaning old build files..."
+rm -rf out/
+rm -rf media/dist/
+rm -f *.vsix
+
+# Step 2: Build media-src
 echo "📦 Building media-src..."
 cd media-src
 bun run build
 cd ..
 
-# Step 2: Build main project (TypeScript compilation)
+# Step 3: Build main project (TypeScript compilation)
 echo "🔨 Building main project..."
 tsc -p ./
 
-# Step 3: Generate VSIX package
+# Step 4: Generate VSIX package
 echo "📤 Generating VSIX package..."
 npx vsce package --no-yarn
 
