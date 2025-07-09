@@ -8,7 +8,6 @@ import { EditorOptions, UpdateMessage } from '../types';
 import { setupThemeHandler, setupToolbarClickHandler } from './editorConfig';
 import { setupPanelHoverEffects } from '../components/panelHover';
 import { setupTableFeatures } from '../features/table/tableEditor';
-import { setupResizableOutline } from '../features/outline/resizableOutline';
 import { toolbar } from '../features/toolbar/toolbarConfig';
 import { createUploadConfig } from '../features/upload/uploadHandler';
 import { sendMessageToVSCode } from '../utils/common';
@@ -89,7 +88,6 @@ export function initVditor(message: UpdateMessage): void {
         setupToolbarClickHandler();
         setupTableFeatures();
         setupPanelHoverEffects();
-        setupResizableOutline(message.options);
       },
       input() {
         // 处理输入事件，添加节流
