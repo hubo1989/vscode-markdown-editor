@@ -114,6 +114,8 @@ function addGlobalStyles(): void {
       -webkit-user-drag: none;
       -moz-user-drag: none;
       -ms-user-drag: none;
+      display: block;
+      margin: 4px auto;
     }
     
     /* 图片边缘检测时的样式 */

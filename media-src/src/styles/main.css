@@ -80,12 +80,13 @@ body[data-use-vscode-theme-color="1"] .vditor {
   box-sizing: border-box;
 }
 
-/* 调整大小时的视觉反馈 */
-.vditor-outline.resizing {
-  user-select: none;
-  pointer-events: none;
-}
 
+/* 内容区滚动条样式 - VSCode默认 */
+.vditor-ir,
+.vditor-reset {
+  scrollbar-width: auto !important;
+  scrollbar-color: auto !important;
+}
 
 /* 大纲项目点击区域增强样式 */
 .vditor-outline li {
@@ -141,7 +142,7 @@ body[data-use-vscode-theme-color="1"] .vditor {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 4px 0;
+  margin: 4px auto;
   cursor: pointer;
 }
 
@@ -179,12 +180,51 @@ body.image-resizing .resize-handle {
 .vditor-ir .vditor-reset img {
   max-width: 100%;
   height: auto;
-  display: inline-block;
-  vertical-align: top;
+  display: block;
+  margin: 4px auto;
 }
 
 /* 图片调整时的视觉反馈 */
 .image-resizing {
   opacity: 0.8;
   transition: opacity 0.1s ease;
+}
+
+
+
+/* 大纲区域滚动条样式 - VSCode风格 */
+.vditor-outline {
+  scrollbar-width: auto !important;
+  scrollbar-color: var(--vscode-scrollbarSlider-background) transparent !important;
+}
+
+.vditor-outline::-webkit-scrollbar {
+  width: 14px !important;
+  height: 14px !important;
+  background: transparent !important;
+}
+
+.vditor-outline::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.vditor-outline::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbarSlider-background) !important;
+  border-radius: 0 !important;
+  border: 3px solid transparent !important;
+  background-clip: content-box !important;
+}
+
+.vditor-outline::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbarSlider-hoverBackground) !important;
+  background-clip: content-box !important;
+}
+
+.vditor-outline::-webkit-scrollbar-thumb:active {
+  background: var(--vscode-scrollbarSlider-activeBackground) !important;
+  background-clip: content-box !important;
+}
+
+.vditor-outline::-webkit-scrollbar-corner {
+  background: transparent !important;
 }

@@ -12,9 +12,9 @@ This fork includes several enhancements and new features:
   - Hot reload when configuration changes
   - See [EXTERNAL_CSS_README.md](./EXTERNAL_CSS_README.md) for details
 
-<img src="docs/imgs/image.png" alt="alt text" width="240" height="150">
+<img src="docs/imgs/image.png" alt="alt text" width="554" height="345">
 
-<img src="docs/imgs/image-1.png" alt="alt text" width="617" height="380">
+<img src="docs/imgs/image-1.png" alt="alt text" width="615" height="379">
 
 Here is the effect of the new feature:
 
