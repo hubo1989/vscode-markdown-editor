@@ -113,3 +113,78 @@ body[data-use-vscode-theme-color="1"] .vditor {
 .vditor-outline li[data-has-children="true"] > span:hover::before {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+/* 图片调整大小功能样式 */
+.image-resize-container {
+  position: absolute;
+  border: none;
+  pointer-events: none;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.resize-handle {
+  position: absolute;
+  background: transparent;
+  border: none;
+  pointer-events: all;
+  box-sizing: border-box;
+}
+
+.resize-handle:hover {
+  background: transparent;
+}
+
+/* 调整大小时的图片样式 */
+.vditor-ir img,
+.vditor-wysiwyg img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 4px 0;
+  cursor: pointer;
+}
+
+/* 防止在调整大小时出现文本选择 */
+.resizing,
+.resizing * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* 拖拽时的全局样式 */
+body.image-resizing {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+body.image-resizing * {
+  cursor: inherit !important;
+  pointer-events: none !important;
+}
+
+body.image-resizing .image-resize-container {
+  pointer-events: all !important;
+}
+
+body.image-resizing .resize-handle {
+  pointer-events: all !important;
+}
+
+/* 确保图片在 IR 模式下正确显示 */
+.vditor-ir .vditor-reset img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* 图片调整时的视觉反馈 */
+.image-resizing {
+  opacity: 0.8;
+  transition: opacity 0.1s ease;
+}

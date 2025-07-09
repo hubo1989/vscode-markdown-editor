@@ -18,3 +18,10 @@ declare module '*.svg' {
     const content: string;
     export default content;
 }
+
+// 声明全局变量
+interface Window {
+    vscode: any;
+    vditor: any;
+    global: any;
+}

@@ -12,9 +12,9 @@ This fork includes several enhancements and new features:
   - Hot reload when configuration changes
   - See [EXTERNAL_CSS_README.md](./EXTERNAL_CSS_README.md) for details
 
-![alt text](docs/imgs/image.png)
+<img src="docs/imgs/image.png" alt="alt text" width="20" height="373">
 
-![alt text](docs/imgs/image-1.png)
+<img src="docs/imgs/image-1.png" alt="alt text" width="584" height="360">
 
 Here is the effect of the new feature:
 
@@ -137,11 +137,9 @@ Edit your settings.json and add
 
 MIT
 
-
 ```
 123
 ```
-
 
 ## Support
 
