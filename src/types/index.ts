@@ -28,6 +28,7 @@ export interface WebviewMessage {
   files?: UploadFile[]
   href?: string
   width?: number
+  showReplace?: boolean
 }
 
 export interface UploadFile {

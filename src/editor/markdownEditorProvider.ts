@@ -13,13 +13,16 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
     // 设置webview选项
     webviewPanel.webview.options = getWebviewOptions(document.uri)
     
-    // 创建EditorPanel实例来处理编辑器逻辑
-    new EditorPanel({
+    // 创建EditorPanel实例来处理编辑器逻辑，并设置为当前面板
+    const editorPanel = new EditorPanel({
       context: this.context,
       panel: webviewPanel,
       extensionUri: this.context.extensionUri,
       document,
       uri: document.uri,
     })
+    
+    // 设置为当前活动面板，以便快捷键能够找到它
+    EditorPanel.currentPanel = editorPanel
   }
 }

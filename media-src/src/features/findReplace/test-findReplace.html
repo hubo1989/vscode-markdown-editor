@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>查找替换功能测试</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .test-section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    
+    .test-section h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .test-result {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    
+    .test-pass {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .test-fail {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .test-content {
+      min-height: 200px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+    
+    button {
+      padding: 8px 16px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #f8f9fa;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background: #e9ecef;
+    }
+  </style>
+</head>
+<body>
+  <h1>查找替换功能测试</h1>
+  
+  <div class="test-section">
+    <h3>测试内容</h3>
+    <div id="testContent" class="test-content">这是一个测试文档，用于测试查找替换功能。
+我们可以在这里查找一些文本，比如"测试"这个词。
+测试功能包括：查找、替换、导航按钮等。
+测试测试测试。</div>
+    <button onclick="startFindReplace()">开始测试查找替换功能</button>
+  </div>
+  
+  <div class="test-section">
+    <h3>测试结果</h3>
+    <div id="testResults"></div>
+  </div>
+  
+  <div class="test-section">
+    <h3>手动测试步骤</h3>
+    <ol>
+      <li>点击"开始测试查找替换功能"按钮</li>
+      <li>在查找框中输入"测试"</li>
+      <li>验证"上一个"和"下一个"按钮的图标是否不同（左箭头和右箭头）</li>
+      <li>验证按钮是否有点击动画效果</li>
+      <li>清空查找框，验证按钮是否自动禁用</li>
+      <li>重新输入"测试"，验证按钮是否重新启用</li>
+      <li>测试键盘快捷键：Enter（下一个）和 Shift+Enter（上一个）</li>
+      <li>验证所有匹配项是否都高亮显示（黄色背景）</li>
+      <li>验证当前匹配项是否有不同的高亮样式（橙色背景和边框）</li>
+      <li>点击"下一个"按钮，验证当前高亮项是否正确更新</li>
+      <li>点击"上一个"按钮，验证当前高亮项是否正确更新</li>
+      <li>验证滚动定位是否将当前匹配项居中显示在屏幕中</li>
+      <li>测试长文档中的滚动定位，确保当前匹配项始终可见</li>
+    </ol>
+  </div>
+
+  <script>
+    // 模拟 Vditor API
+    window.vditor = {
+      getValue: () => document.getElementById('testContent').textContent,
+      setValue: (content) => {
+        document.getElementById('testContent').textContent = content;
+      },
+      vditor: {
+        element: document.getElementById('testContent')
+      }
+    };
+
+    function startFindReplace() {
+      // 加载查找替换模块
+      const script = document.createElement('script');
+      script.src = './findReplace/index.ts';
+      script.type = 'module';
+      script.onload = () => {
+        // 初始化查找替换功能
+        if (window.findReplaceHandler) {
+          window.findReplaceHandler.show();
+          addTestResults('查找替换功能已加载', true);
+        } else {
+          addTestResults('查找替换功能加载失败', false);
+        }
+      };
+      document.head.appendChild(script);
+    }
+    
+    function addTestResults(message, isPass) {
+      const resultsDiv = document.getElementById('testResults');
+      const resultDiv = document.createElement('div');
+      resultDiv.className = `test-result ${isPass ? 'test-pass' : 'test-fail'}`;
+      resultDiv.textContent = message;
+      resultsDiv.appendChild(resultDiv);
+    }
+  </script>
+</body>
+</html>

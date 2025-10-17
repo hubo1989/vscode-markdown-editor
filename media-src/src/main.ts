@@ -13,6 +13,10 @@ import { UpdateMessage } from './types';
 import { updateToolbarVisibility } from './features/toolbar/toolbarHandler';
 import { updateCssFile, reloadAllCss, findCssLinkTag, handleCssFileDeleted } from './features/css/cssHandler';
 import { initImageResize } from './features/image/imageResize';
+import { findReplaceHandler } from './features/findReplace';
+
+// 添加调试日志
+console.log('查找替换模块已导入', findReplaceHandler);
 
 
 
@@ -103,6 +107,23 @@ function initializeApp(): void {
         // 处理CSS文件被删除的情况
         if (message.cssFile) {
           handleCssFileDeleted(message.cssFile);
+        }
+        break;
+      }
+      
+      case 'open-find-dialog': {
+        // 打开查找替换对话框
+        console.log('收到 open-find-dialog 消息');
+        try {
+          if (!findReplaceHandler) {
+            console.error('findReplaceHandler 未定义');
+            return;
+          }
+          const showReplace = message.showReplace || false;
+          findReplaceHandler.show(showReplace);
+          console.log('查找替换对话框已打开');
+        } catch (error) {
+          console.error('打开查找替换对话框时出错:', error);
         }
         break;
       }

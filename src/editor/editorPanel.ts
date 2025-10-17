@@ -78,6 +78,15 @@ export class EditorPanel {
     })
   }
 
+  public static openFindDialog(showReplace: boolean): void {
+    if (EditorPanel.currentPanel) {
+      EditorPanel.currentPanel.dependencies.panel.webview.postMessage({
+        command: 'open-find-dialog',
+        showReplace
+      })
+    }
+  }
+
   private static async getDocument(uri?: vscode.Uri): Promise<vscode.TextDocument | undefined> {
     if (!vscode.window.activeTextEditor && !uri) {
       showError('Did not open markdown file!')

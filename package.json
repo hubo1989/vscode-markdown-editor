@@ -49,6 +49,16 @@
         "command": "markdown-editor.toggleDefault",
         "title": "Toggle Markdown Editor Default Mode",
         "category": "markdown-editor"
+      },
+      {
+        "command": "markdown-editor.find",
+        "title": "Find",
+        "category": "markdown-editor"
+      },
+      {
+        "command": "markdown-editor.findReplace",
+        "title": "Find and Replace",
+        "category": "markdown-editor"
       }
     ],
     "menus": {
@@ -72,6 +82,18 @@
           "command": "markdown-editor.openInSplit",
           "group": "navigation@2",
           "icon": "$(pencil)"
+        }
+      ],
+      "webview/context": [
+        {
+          "command": "markdown-editor.find",
+          "when": "webviewId == 'markdown-editor'",
+          "group": "navigation"
+        },
+        {
+          "command": "markdown-editor.findReplace",
+          "when": "webviewId == 'markdown-editor'",
+          "group": "navigation"
         }
       ]
     },
@@ -149,6 +171,18 @@
         "command": "markdown-editor.openEditor",
         "mac": "cmd+shift+alt+m",
         "when": "editorTextFocus && editorLangId == markdown"
+      },
+      {
+        "key": "ctrl+f",
+        "command": "markdown-editor.find",
+        "mac": "cmd+f",
+        "when": "activeCustomEditorId == 'markdown-editor.editor' || activeWebviewPanelId == 'markdown-editor'"
+      },
+      {
+        "key": "ctrl+h",
+        "command": "markdown-editor.findReplace",
+        "mac": "cmd+alt+f",
+        "when": "activeCustomEditorId == 'markdown-editor.editor' || activeWebviewPanelId == 'markdown-editor'"
       }
     ],
     "customEditors": [

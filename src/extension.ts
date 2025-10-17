@@ -27,6 +27,28 @@ export function activate(context: vscode.ExtensionContext) {
     )
   )
 
+  // 注册查找命令
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'markdown-editor.find',
+      () => {
+        debug('command find')
+        EditorPanel.openFindDialog(false)
+      }
+    )
+  )
+
+  // 注册查找替换命令
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'markdown-editor.findReplace',
+      () => {
+        debug('command findReplace')
+        EditorPanel.openFindDialog(true)
+      }
+    )
+  )
+
   // 注册自定义编辑器提供者
   context.subscriptions.push(
     vscode.window.registerCustomEditorProvider(
