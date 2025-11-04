@@ -16,6 +16,14 @@ This major update brings powerful new charting, math, and music notation capabil
 - **🎼 Music Notation** - ABC notation for sheet music and musical scores
 - **🧮 Mathematical Formulas** - KaTeX-powered math expressions (both block and inline)
 
+#### 📤 **Export Functionality**
+- **🖨️ PDF Export** - Export documents to PDF format with full styling and layout preservation
+- **📄 Word Export** - Export to Word documents with embedded images and complete formatting
+- **🌐 HTML Export** - Generate standalone HTML files with interactive charts and formulas
+- **🎨 Table Border Support** - Complete table styling with borders and proper formatting
+- **📊 Chart Export** - All charts (Mermaid, PlantUML, ECharts) properly rendered in exported documents
+- **🖼️ Image Export** - Images embedded and preserved across all export formats
+
 #### ⌨️ **Enhanced Toolbar Experience**
 - **Main Toolbar Buttons** - All chart and math tools are now primary toolbar buttons
 - **Smart Shortcuts** - Quick access with Cmd/Ctrl + Shift shortcuts
@@ -25,12 +33,14 @@ This major update brings powerful new charting, math, and music notation capabil
 #### 🎯 **Quick Access Shortcuts**
 | Feature | Shortcut | Description |
 |--------|----------|-------------|
+| Insert Image | ⌘+Shift+I | Insert Markdown image syntax |
 | Mermaid Chart | ⌘+Shift+M | Insert Mermaid flowchart/diagram |
 | PlantUML Diagram | ⌘+Shift+P | Insert UML diagram |
 | ECharts Visualization | ⌘+Shift+E | Insert data chart |
 | Music Notation | ⌘+Shift+N | Insert ABC music notation |
 | Math Formula Block | ⌘+Shift+B | Insert mathematical formula |
-| Inline Math Formula | ⌘+Shift+I | Insert inline math expression |
+| Inline Math Formula | ⌘+Shift+U | Insert inline math expression |
+| Export Document | 📤 | Choose PDF, Word, or HTML export |
 
 #### 🔄 **Enhanced Rendering Engine**
 - **vditor 3.11.2** - Latest version with improved performance
