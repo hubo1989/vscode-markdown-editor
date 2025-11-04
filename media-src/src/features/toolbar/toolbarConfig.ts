@@ -76,6 +76,132 @@ function saveDocument(): void {
 }
 
 /**
+ * 插入 Mermaid 图表模板
+ */
+function insertMermaidChart(): void {
+  const template = `\`\`\`mermaid
+graph TD
+    A[开始] --> B[处理数据]
+    B --> C{判断条件}
+    C -->|是| D[执行操作]
+    C -->|否| E[结束]
+    D --> E
+\`\`\`
+
+`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
+ * 插入 PlantUML 图表模板
+ */
+function insertPlantUMLChart(): void {
+  const template = `\`\`\`plantuml
+@startuml
+Alice -> Bob: 请求认证
+Bob --> Alice: 认证响应
+Alice -> Bob: 请求数据
+Bob --> Alice: 返回数据
+@enduml
+\`\`\`
+
+`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
+ * 插入 ECharts 图表模板
+ */
+function insertEChartsChart(): void {
+  const template = `\`\`\`echarts
+{
+  "title": {
+    "text": "示例图表"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "data": ["A", "B", "C", "D", "E"]
+  },
+  "yAxis": {},
+  "series": [{
+    "name": "销量",
+    "type": "bar",
+    "data": [5, 20, 36, 10, 20]
+  }]
+}
+\`\`\`
+
+`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
+ * 插入五线谱模板
+ */
+function insertStaffNotation(): void {
+  const template = `\`\`\`abc
+X:1
+T:C
+K:C
+G4|C4 E4 G4|G4 F2 A2|B3 G3 B3|d4 B2|
+w:3
+GABc|d2 e2|f2 g2|a2 b2|
+\`\`\`
+
+`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
+ * 插入数学公式块
+ */
+function insertMathBlock(): void {
+  const template = `$$
+\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}
+$$
+
+`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
+ * 插入行级数学公式
+ */
+function insertInlineMath(): void {
+  const template = `$E = mc^2$`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
+ * 插入图片
+ */
+function insertImage(): void {
+  const template = `![图片描述](https://example.com/image.png)`;
+
+  const vditor = window.vditor;
+  const position = vditor.getCursorPosition();
+  vditor.insertValue(template, position);
+}
+
+/**
  * 工具栏配置
  */
 export const toolbar = [
@@ -112,8 +238,85 @@ export const toolbar = [
   'insert-before',
   'insert-after',
   '|',
+  // 插入图片
+  {
+    name: 'insert-image',
+    tipPosition: 's',
+    tip: '插入图片',
+    hotkey: '⌘+shift+i',
+    className: 'insert-image',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>',
+    click: insertImage,
+  },
   'upload',
   'table',
+  '|',
+
+  // Mermaid 图表
+  {
+    name: 'mermaid',
+    tipPosition: 's',
+    tip: '插入 Mermaid 图表',
+    hotkey: '⌘+shift+m',
+    className: 'mermaid',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M12 2L2 7L12 12L22 7L12 2Z"/><path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" fill="none"/><path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
+    click: insertMermaidChart,
+  },
+
+  // PlantUML 图表
+  {
+    name: 'plantuml',
+    tipPosition: 's',
+    tip: '插入 PlantUML 图表',
+    hotkey: '⌘+shift+p',
+    className: 'plantuml',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11h8M8 15h8" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="9" r="1" fill="currentColor"/><circle cx="12" cy="9" r="1" fill="currentColor"/><circle cx="18" cy="9" r="1" fill="currentColor"/></svg>',
+    click: insertPlantUMLChart,
+  },
+
+  // ECharts 图表
+  {
+    name: 'echarts',
+    tipPosition: 's',
+    tip: '插入 ECharts 图表',
+    hotkey: '⌘+shift+e',
+    className: 'echarts',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M3 13h2v8H3zm4-8h2v16H7zm4-2h2v18h-2zm4 4h2v14h-2zm4-2h2v16h-2z"/></svg>',
+    click: insertEChartsChart,
+  },
+
+  // 五线谱
+  {
+    name: 'staff',
+    tipPosition: 's',
+    tip: '插入五线谱',
+    hotkey: '⌘+shift+n',
+    className: 'staff',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M3 4h18v1H3V4zm0 3h18v1H3V7zm0 3h18v1H3v-1zm0 3h18v1H3v-1zm0 3h18v1H3v-1z"/><circle cx="8" cy="8.5" r="1.5"/><circle cx="16" cy="11.5" r="1.5"/><path d="M9.5 8.5v5m0-5l6.5 3"/></svg>',
+    click: insertStaffNotation,
+  },
+
+  // 数学公式块
+  {
+    name: 'math-block',
+    tipPosition: 's',
+    tip: '插入数学公式块',
+    hotkey: '⌘+shift+b',
+    className: 'math-block',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M7 4h2v16H7V4zm4 0h2v16h-2V4zm4 0h2v16h-2V4z"/><path d="M5 12h14v-2H5v2z" fill="currentColor"/></svg>',
+    click: insertMathBlock,
+  },
+
+  // 行级数学公式
+  {
+    name: 'inline-math',
+    tipPosition: 's',
+    tip: '插入行级数学公式',
+    hotkey: '⌘+shift+i',
+    className: 'inline-math',
+    icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><rect x="4" y="6" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="13" text-anchor="middle" font-size="8" font-family="monospace">∑</text></svg>',
+    click: insertInlineMath,
+  },
   '|',
   'undo',
   'redo',

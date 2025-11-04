@@ -49,7 +49,65 @@ export function initVditor(message: UpdateMessage): void {
     preview: {
       math: {
         inlineDigit: true,
+        macros: {
+          "\\f": "#1f(#2)",
+        },
+        engine: 'KaTeX', // 使用 KaTeX 渲染数学公式
+      },
+      // 启用图表支持
+      mermaid: true,
+      echarts: true,
+      abc: true, // ABC 记谱法（五线谱）
+      plantuml: true,
+      // 启用代码块渲染优化
+      cdn: 'https://cdn.jsdelivr.net/npm/vditor@3.11.2',
+      // 启用图表渲染引擎
+      chart: true,
+      // 启用流程图
+      flowchart: true,
+      // 启用序列图
+      sequence: true,
+      // PlantUML 特定配置 - 尝试使用本地渲染
+      plantumlServer: 'https://www.plantuml.com/plantuml/png/',
+      // PlantUML 备用服务器
+      plantumlServerList: [
+        'https://www.plantuml.com/plantuml/png/',
+        'https://plantuml-server.kkeisuke.app/png/',
+        'http://www.plantuml.com/plantuml/png/'
+      ],
+      // 启用图表渲染模式
+      mode: 'both',
+      // PlantUML 渲染配置
+      plantumlRenderMode: 'local',
+      // 启用 markdown 渲染扩展
+      markdown: {
+        autoSpace: false,
+        gfmAutoLink: true,
+        breaks: true,
+        chinesePunct: true,
+        paragraphBeginningSpace: false,
+        sanitize: false
+      },
+      // 启用代码块主题
+      code: {
+        theme: 'github',
+        lineNumber: false
       }
+    },
+    // 启用上传配置
+    upload: createUploadConfig(),
+    // 启用缓存配置
+    cache: { enable: false },
+    // 启用编辑器插件
+    plugins: [
+      // 可以在这里添加自定义插件
+    ],
+    // 启用扩展配置
+    ext: true, // 启用 vditor 扩展
+    // 启用代码块扩展
+    code: {
+      lineNumber: false,
+      theme: 'auto'
     }
   });
   

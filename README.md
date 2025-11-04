@@ -1,137 +1,281 @@
 # Markdown Editor — A full-featured WYSIWYG editor for markdown
 
-## 📝 Fork Changelog
+## 🌐 Language / 语言
+[English](#) | [中文](READMECN.md)
 
-This fork includes several enhancements and new features:
+## 🎉 Version 1.0.0 - Major Release
 
-### 🚀 New Features
+### 🌟 All-New Features in v1.0.0
 
-- **🎨 External CSS Support** - Load external CSS files from URLs or local paths
-  - Support for HTTP/HTTPS URLs and local file paths
-  - Configurable CSS loading order
-  - Hot reload when configuration changes
-  - See [EXTERNAL_CSS_README.md](./EXTERNAL_CSS_README.md) for details
+This major update brings powerful new charting, math, and music notation capabilities to your markdown editing experience!
 
-<img src="docs/imgs/image.png" alt="alt text" width="554" height="345">
+#### 📊 **Comprehensive Chart Support**
+- **🎨 Mermaid Charts** - Flowcharts, sequence diagrams, pie charts, and more
+- **🏗️ PlantUML Diagrams** - UML class diagrams, use cases, sequence diagrams
+- **📈 ECharts Visualizations** - Interactive data charts and graphs
+- **🎼 Music Notation** - ABC notation for sheet music and musical scores
+- **🧮 Mathematical Formulas** - KaTeX-powered math expressions (both block and inline)
 
-<img src="docs/imgs/image-1.png" alt="alt text" width="615" height="379">
+#### ⌨️ **Enhanced Toolbar Experience**
+- **Main Toolbar Buttons** - All chart and math tools are now primary toolbar buttons
+- **Smart Shortcuts** - Quick access with Cmd/Ctrl + Shift shortcuts
+- **Theme-Adaptive Icons** - Icons that automatically match your VS Code theme
+- **One-Click Templates** - Pre-configured templates for instant use
 
-Here is the effect of the new feature:
+#### 🎯 **Quick Access Shortcuts**
+| Feature | Shortcut | Description |
+|--------|----------|-------------|
+| Mermaid Chart | ⌘+Shift+M | Insert Mermaid flowchart/diagram |
+| PlantUML Diagram | ⌘+Shift+P | Insert UML diagram |
+| ECharts Visualization | ⌘+Shift+E | Insert data chart |
+| Music Notation | ⌘+Shift+N | Insert ABC music notation |
+| Math Formula Block | ⌘+Shift+B | Insert mathematical formula |
+| Inline Math Formula | ⌘+Shift+I | Insert inline math expression |
 
-![alt text](docs/imgs/image-3.png)
+#### 🔄 **Enhanced Rendering Engine**
+- **vditor 3.11.2** - Latest version with improved performance
+- **KaTeX Integration** - Fast and accurate math formula rendering
+- **Multiple Rendering Servers** - Improved PlantUML reliability with backup servers
+- **Local Rendering Support** - Enhanced offline capabilities
 
-- **⚙️ Enhanced Editor Options**
+### 🎨 Previous Features (Retained)
 
-  - Configurable outline display settings
-  - Optional default editor behavior for .md files
-  - Menu button to open markdown files in split view
+- **External CSS Support** - Load CSS files from URLs or local paths
+- **Enhanced Editor Options** - Configurable outline and display settings
+- **Multi-theme Support** - Light and dark themes
+- **Split View Mode** - Edit and preview simultaneously
+- **Auto-sync** - Real-time synchronization with VS Code editor
 
-![alt text](docs/imgs/image-2.png)
+## 🖼️ Feature Showcase
 
-### 🛠️ Technical Improvements
+### Chart Examples
 
-- **🔧 Build System Enhancement** - Switched from pnpm to bun for faster builds
-- **🐛 Bug Fixes** - Fixed OverlayWebview disposal issues
-- **🎯 UI/UX Improvements** - Added distinct icons for menu buttons
+**Mermaid Flowchart:**
+```mermaid
+graph TD
+    A[Start] --> B[Process Data]
+    B --> C{Decision}
+    C -->|Yes| D[Execute]
+    C -->|No| E[End]
+    D --> E
+```
+
+**PlantUML Class Diagram:**
+```plantuml
+@startuml
+class User {
+  +name: String
+  +email: String
+  +login(): void
+}
+@enduml
+```
+
+**ECharts Bar Chart:**
+```echarts
+{
+  "title": { "text": "Sales Data" },
+  "xAxis": { "data": ["Jan", "Feb", "Mar"] },
+  "series": [{
+    "type": "bar",
+    "data": [120, 200, 150]
+  }]
+}
+```
+
+**Mathematical Formulas:**
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
+Inline formula: $E = mc^2$
 
 ### 🔧 Configuration Options
 
-New configuration options available:
+All configuration options available:
 
 - `markdown-editor.externalCssFiles` - Array of external CSS file paths/URLs
 - `markdown-editor.cssLoadOrder` - Control CSS loading priority
 - `markdown-editor.outlineDisplaySetting` - Configure outline panel behavior
+- `markdown-editor.showToolbar` - Show/hide toolbar
+- `markdown-editor.useVscodeThemeColor` - Use VS Code theme colors
+- `markdown-editor.isDefault` - Set as default markdown editor
 
----
+## 🎯 Core Features
 
-## Demo
+- **🎨 Rich Chart Support** - Mermaid, PlantUML, ECharts, ABC notation, mathematical formulas
+- **📝 WYSIWYG Editing** - What You See Is What You Get editing experience
+- **🔄 Real-time Sync** - Auto sync changes between VSCode editor and webview
+- **📋 Multi-format Support** - Copy markdown/html, paste images
+- **🖼️ Theme Integration** - Uses VS Code theme colors automatically
+- **⌨️ Keyboard Shortcuts** - Comprehensive shortcut key support
+- **👁️ Multiple Editing Modes** - IR mode, WYSIWYG mode, split screen mode
+- **📱 Responsive Design** - Adapts to different window sizes
+- **🔧 Extensibility** - Custom CSS and configuration support
 
-![demo](./demo.gif)
+## 🚀 Installation
 
-## Features
+```
+Download the visx installation package from the release and drag it into VSCode/cursor…
+```
 
-- What You See Is What You Get (WYSIWYG)
-- Auto sync changes between the VSCode editor and webview
-- Copy markdown/html
-- Uploaded/pasted/drag-dropped images will be auto-saved to the `assets` folder
-- Multi-theme support
-- Shortcut keys
-- Multiple editting modes: instant Rendering mode (**Recommand!**) / WYSIWYG mode / split screen mode
-- Markdown extensions
-- Multiple graph support including KaTeX / Mermaid / Graphviz / ECharts / abc.js(notation) / ...
-- For more usage please see[vditor](https://github.com/Vanessa219/vditor)
+## 🎮 Usage
 
-## Install
+### 1. **Command Palette**
 
-[https://marketplace.visualstudio.com/items?itemName=zaaack.markdown-editor](https://marketplace.visualstudio.com/items?itemName=zaaack.markdown-editor)
+- Open a markdown file
+- Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux)
+- Type `markdown-editor: Open with markdown editor`
 
-## Supported syntax
+### 2. **Keyboard Shortcut**
+- Open a markdown file
+- Press `Cmd+Shift+Alt+M` (Mac) or `Ctrl+Shift+Alt+M` (Windows/Linux)
 
-[demo article](https://ld246.com/guide/markdown)
+### 3. **Explorer Context Menu**
+- Right-click on any `.md` file
+- Select `Open with markdown editor`
 
-## Usage
+### 4. **Editor Title Context Menu**
+- Right-click on a markdown file's tab title
+- Select `Open with markdown editor`
 
-### 1. Command mode in markdown file
+### 5. **Split View Button**
+- Click the pencil icon in the editor title bar
+- Opens in split view with source and preview
 
-- open a markdown file
-- type `cmd-shift-p` to enter command mode
-- type `markdown-editor: Open with markdown editor`
+## ⌨️ Keyboard Shortcuts
 
-### 2. Key bindings
+| Action | Mac | Windows/Linux |
+|--------|-----|---------------|
+| Open Editor | `Cmd+Shift+Alt+M` | `Ctrl+Shift+Alt+M` |
+| Save | `Cmd+S` | `Ctrl+S` |
+| Mermaid Chart | `Cmd+Shift+M` | `Ctrl+Shift+M` |
+| PlantUML Diagram | `Cmd+Shift+P` | `Ctrl+Shift+P` |
+| ECharts Chart | `Cmd+Shift+E` | `Ctrl+Shift+E` |
+| Music Notation | `Cmd+Shift+N` | `Ctrl+Shift+N` |
+| Math Formula Block | `Cmd+Shift+B` | `Ctrl+Shift+B` |
+| Inline Math Formula | `Cmd+Shift+I` | `Ctrl+Shift+I` |
 
-- open a markdown file
-- type `ctrl+shift+alt+m` for win or `cmd+shift+alt+m` for mac
+## 🌟 Supported Syntax
 
-### 3. Explorer Context menu
+The editor supports all standard markdown syntax plus extensive extensions:
 
-- right click on markdown file
-- then click `Open with markdown editor`
+- **📝 Standard Markdown** - Headers, lists, tables, links, images
+- **🎨 Extended Syntax** - Footnotes, task lists, strikethrough, highlight
+- **📊 Charts & Diagrams** - Mermaid, PlantUML, ECharts, flowcharts
+- **🧮 Mathematical Formulas** - KaTeX math expressions (block and inline)
+- **🎼 Music Notation** - ABC notation for sheet music
+- **💻 Code Blocks** - Syntax highlighting for 100+ languages
+- **🔗 Auto-linking** - URLs and emails automatically linked
 
-### 4. Editor title context menu
+See the [complete syntax guide](https://ld246.com/guide/markdown) for detailed examples.
 
-- right click on a opened markdown file's tab title
-- then click `Open with markdown editor`
+## 🔧 Development
 
-## Development
+### Getting Started
 
-### Building and Packaging
-
-This project includes automated build scripts for easy development and packaging:
+Clone the repository and install dependencies:
 
 ```bash
-# Build and create VSIX package
+git clone https://github.com/zaaack/vscode-markdown-editor.git
+cd vscode-markdown-editor
+npm install
+```
+
+### Development Workflow
+
+```bash
+# Start development with hot reload
+npm run watch
+
+# Build for production
+npm run build
+
+# Create VSIX package
 npm run package
 
-# Build and publish (with version bump)
+# Publish to marketplace (with version bump)
 npm run publish
 
-# Build and package only (no publish)
-npm run publish:package-only
-
-# Build and publish without version bump
+# Publish without version bump
 npm run publish:skip-version
 ```
 
-For more details, see [scripts/README.md](./scripts/README.md).
+For detailed build instructions, see [scripts/README.md](./scripts/README.md).
 
-### Custom CSS (custom layout and vditor personalization)
+### 🎨 Customization
 
-Edit your settings.json and add
+#### Custom CSS
+Edit your VS Code settings to add custom CSS:
 
 ```json
-"markdown-editor.customCss": "my custom css rules"
-
-// Eg: "markdown-editor.customCss": ".vditor-ir pre.vditor-reset {line-height: 32px;padding-right: calc(100% - 800px) !important; margin-left: 100px;    font-family: system-ui !important;}"
+{
+  "markdown-editor.customCss": ".vditor-ir pre.vditor-reset { line-height: 32px; font-family: system-ui; }"
+}
 ```
 
-## Acknowledgement
+#### External CSS Files
+Load external CSS files:
 
-- [vscode](https://github.com/microsoft/vscode)
+```json
+{
+  "markdown-editor.externalCssFiles": [
+    "https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css",
+    "./styles/custom.css"
+  ]
+}
+```
+
+#### Custom Configuration
+All other settings can be configured through VS Code settings under the `markdown-editor.*` namespace.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read the [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
+
+### Development Setup
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 🙏 Acknowledgements
+
+This extension is built upon the amazing work of:
+
+- **[VS Code](https://github.com/microsoft/vscode)** - The best code editor
+- **[vditor](https://github.com/Vanessa219/vditor)** - Powerful markdown editor engine
+- **[KaTeX](https://katex.org/)** - Fast math typesetting library
+- **[Mermaid](https://mermaid-js.org/)** - Diagramming and charting tool
+- **[PlantUML](https://plantuml.com/)** - UML diagram generator
+- **[ECharts](https://echarts.apache.org/)** - Data visualization library
+
+## 📋 Todo
+
+- [ ] Enhanced mobile support
+- [ ] Collaborative editing features
+- [ ] Advanced export options
+- [ ] Plugin system for custom extensions
+- [ ] Integration with popular services (GitHub, GitLab, etc.)
+
+## 📄 License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## ❤️ Support
+
+If you find this extension helpful:
+
+- ⭐ **Star the repository** on GitHub
+- 🐛 **Report issues** with detailed reproduction steps
+- 💬 **Share feedback** and feature requests
+
+---
+
+**Version 1.0.0** - The most feature-rich markdown editor for VS Code! 🎉
 - [vditor](https://github.com/Vanessa219/vditor)
-
-## Todo
-
-- [ ] Using[Custom Text Editor](https://code.visualstudio.com/api/extension-guides/custom-editors#custom-text-editor) ([demo](https://github.com/gera2ld/markmap-vscode))
 
 ## License
 
@@ -143,4 +287,4 @@ MIT
 
 ## Support
 
-If you like this extension make sure to star the repo. I am always looking for new ideas and feedback. In addition, it is possible to [donate via paypal](https://www.paypal.me/zaaack).
+If you like this extension make sure to star the repo. I am always looking for new ideas and feedback. 

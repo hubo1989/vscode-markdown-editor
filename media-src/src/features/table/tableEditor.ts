@@ -2,7 +2,7 @@
  * 表格编辑功能模块
  * IR模式下的表格编辑功能增强
  */
-import { keyboard } from '@testing-library/user-event/dist/keyboard';
+import userEvent from '@testing-library/user-event';
 import $ from 'jquery';
 import { t, updateHotkeyTip } from '../../i18n/lang';
 
@@ -137,11 +137,7 @@ function handleTableButtonClick(event: any): void {
     // 模拟键盘输入
     const eventRoot = window.vditor.vditor.ir.element;
     Promise.resolve(
-      keyboard(shortcut, {
-        document: {
-          body: eventRoot,
-        } as any,
-      })
+      userEvent.keyboard(shortcut)
     ).finally(() => {
       disableVscodeHotkeys = false;
     });
